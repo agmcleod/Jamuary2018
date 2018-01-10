@@ -39,7 +39,6 @@ func _on_area_enter(value):
 		# If hit object a non enemy, and the bullet is an enemy bullet, or if it hit the player and is not a player bullet
 		if (hit_name.find("Enemy") == -1 && name.find("EnemyBullet") != -1) \
 			|| (hit_name != "PlayerBody" && hit_name.find("PlayerBullet") == -1 && name.find("PlayerBullet") != -1):
-			print("Bullet removed against: ", hit_name)
 			queue_free()
 
 func _ready():

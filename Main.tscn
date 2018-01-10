@@ -28,6 +28,8 @@ margin/bottom = 480.0
 [node name="RightDoor" parent="MainRoom" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 617.438, 240 )
+exit_pos = Vector2( 720, 240 )
+exit_room = NodePath("../../EnemyKeyRoom")
 
 [node name="PlayerBody" type="KinematicBody2D" parent="."]
 
@@ -80,6 +82,8 @@ margin/top = 0.0
 [node name="LeftDoor" parent="EnemyKeyRoom" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 25, 240 )
+exit_pos = Vector2( 560, 240 )
+exit_room = NodePath("../../MainRoom")
 
 [node name="EnemyBody" parent="EnemyKeyRoom" instance=ExtResource( 5 )]
 

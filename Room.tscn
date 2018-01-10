@@ -1,14 +1,15 @@
-[gd_scene load_steps=9 format=1]
+[gd_scene load_steps=10 format=1]
 
-[ext_resource path="res://sidewall.png" type="Texture" id=1]
-[ext_resource path="res://topwall.png" type="Texture" id=2]
+[ext_resource path="res://Room.gd" type="Script" id=1]
+[ext_resource path="res://sidewall.png" type="Texture" id=2]
+[ext_resource path="res://topwall.png" type="Texture" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
 extents = Vector2( 10, 10.1567 )
 
-[sub_resource type="RectangleShape2D" id=6]
+[sub_resource type="RectangleShape2D" id=2]
 
 custom_solver_bias = 0.0
 extents = Vector2( 10, 10 )
@@ -18,17 +19,17 @@ extents = Vector2( 10, 10 )
 custom_solver_bias = 0.0
 extents = Vector2( 10, 10 )
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=4]
 
 custom_solver_bias = 0.0
 extents = Vector2( 10, 20.4514 )
 
-[sub_resource type="RectangleShape2D" id=4]
+[sub_resource type="RectangleShape2D" id=5]
 
 custom_solver_bias = 0.0
 extents = Vector2( 10.0773, 10 )
 
-[sub_resource type="RectangleShape2D" id=5]
+[sub_resource type="RectangleShape2D" id=6]
 
 custom_solver_bias = 0.0
 extents = Vector2( 10, 10 )
@@ -43,6 +44,8 @@ margin/left = 1.0
 margin/top = -1.0
 margin/right = 641.0
 margin/bottom = 479.0
+script/script = ExtResource( 1 )
+room_id = 0
 
 [node name="LeftWall" type="StaticBody2D" parent="."]
 
@@ -62,7 +65,7 @@ bounce = 0.0
 [node name="Sprite 2" type="Sprite" parent="LeftWall"]
 
 transform/scale = Vector2( 1.25809, 0.133527 )
-texture = ExtResource( 1 )
+texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall"]
 
@@ -76,7 +79,7 @@ _update_shape_index = 0
 [node name="Area2D" type="Area2D" parent="LeftWall"]
 
 input/pickable = true
-shapes/0/shape = SubResource( 6 )
+shapes/0/shape = SubResource( 2 )
 shapes/0/transform = Matrix32( 3.20248, 0, 0, 3.09164, -0.517983, 0.657633 )
 shapes/0/trigger = false
 gravity_vec = Vector2( 0, 1 )
@@ -88,7 +91,7 @@ angular_damp = 1.0
 
 transform/pos = Vector2( -0.517983, 0.657633 )
 transform/scale = Vector2( 3.20248, 3.09164 )
-shape = SubResource( 6 )
+shape = SubResource( 2 )
 trigger = false
 _update_shape_index = 0
 
@@ -111,7 +114,7 @@ bounce = 0.0
 
 transform/pos = Vector2( 1.78697, -0.0418587 )
 transform/scale = Vector2( 1.25809, 0.133527 )
-texture = ExtResource( 1 )
+texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall"]
 
@@ -144,7 +147,7 @@ _update_shape_index = 0
 
 transform/pos = Vector2( 320, 25 )
 input/pickable = false
-shapes/0/shape = SubResource( 2 )
+shapes/0/shape = SubResource( 4 )
 shapes/0/transform = Matrix32( 32.1213, 0, 0, 1.1966, 0.654146, -0.523587 )
 shapes/0/trigger = false
 collision/layers = 1
@@ -157,20 +160,20 @@ bounce = 0.0
 [node name="Sprite" type="Sprite" parent="TopWall"]
 
 transform/pos = Vector2( 0, -0.568565 )
-texture = ExtResource( 2 )
+texture = ExtResource( 3 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TopWall"]
 
 transform/pos = Vector2( 0.654146, -0.523587 )
 transform/scale = Vector2( 32.1213, 1.1966 )
-shape = SubResource( 2 )
+shape = SubResource( 4 )
 trigger = false
 _update_shape_index = 0
 
 [node name="Area2D" type="Area2D" parent="TopWall"]
 
 input/pickable = true
-shapes/0/shape = SubResource( 4 )
+shapes/0/shape = SubResource( 5 )
 shapes/0/transform = Matrix32( 31.8284, 0, 0, 2.42015, -0.182157, 1.23846 )
 shapes/0/trigger = false
 gravity_vec = Vector2( 0, 1 )
@@ -182,7 +185,7 @@ angular_damp = 1.0
 
 transform/pos = Vector2( -0.182157, 1.23846 )
 transform/scale = Vector2( 31.8284, 2.42015 )
-shape = SubResource( 4 )
+shape = SubResource( 5 )
 trigger = false
 _update_shape_index = 0
 
@@ -190,7 +193,7 @@ _update_shape_index = 0
 
 transform/pos = Vector2( 320, 455 )
 input/pickable = false
-shapes/0/shape = SubResource( 2 )
+shapes/0/shape = SubResource( 4 )
 shapes/0/transform = Matrix32( 31.9809, 0, 0, 1.16709, 1.54874, -1.21571 )
 shapes/0/trigger = false
 collision/layers = 1
@@ -203,20 +206,20 @@ bounce = 0.0
 [node name="Sprite" type="Sprite" parent="BottomWall"]
 
 transform/pos = Vector2( 0, -0.568565 )
-texture = ExtResource( 2 )
+texture = ExtResource( 3 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BottomWall"]
 
 transform/pos = Vector2( 1.54874, -1.21571 )
 transform/scale = Vector2( 31.9809, 1.16709 )
-shape = SubResource( 2 )
+shape = SubResource( 4 )
 trigger = false
 _update_shape_index = 0
 
 [node name="Area2D" type="Area2D" parent="BottomWall"]
 
 input/pickable = true
-shapes/0/shape = SubResource( 5 )
+shapes/0/shape = SubResource( 6 )
 shapes/0/transform = Matrix32( 32.0217, 0, 0, 2.66032, -1.19625, -1.02332 )
 shapes/0/trigger = false
 gravity_vec = Vector2( 0, 1 )
@@ -228,7 +231,7 @@ angular_damp = 1.0
 
 transform/pos = Vector2( -1.19625, -1.02332 )
 transform/scale = Vector2( 32.0217, 2.66032 )
-shape = SubResource( 5 )
+shape = SubResource( 6 )
 trigger = false
 _update_shape_index = 0
 

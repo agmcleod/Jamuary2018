@@ -83,25 +83,25 @@ func _fixed_process(delta):
 	if shoot_timeout > 0:
 		shoot_timeout -= delta
 
+func move_camera_to_room(room):
+	var room_pos = room.get_pos()
+	move_camera_to.x = room_pos.x + 320
+	move_camera_to.y = room_pos.y + 240
 
 func _on_area_enter(value):
 	var parent = value.get_parent()
 	var camera = get_node("/root/Container/Camera2D")
 	var goto_next_room = false
 	if parent:
-		var name = parent.get_name()
-		if name == "RightDoor":
-			set_pos(Vector2(720, 240))
-			move_camera_to.x = 960
-			move_camera_to.y = 240
+		var door = parent
+		var name = door.get_name()
+		if name.find("Door") != -1 && !door.call("is_locked"):
 			goto_next_room = true
-			current_room = KEY_ROOM
-		elif name == "LeftDoor" && !parent.call("is_locked"):
-			set_pos(Vector2(560, 240))
-			move_camera_to.x = 320
-			move_camera_to.y = 240
-			goto_next_room = true
-			current_room = CENTER_ROOM
+			var room = door.get_node(door.exit_room)
+			move_camera_to_room(room)
+			current_room = room.room_id
+			set_pos(door.exit_pos)
+			room.call("on_player_enter")
 		elif name.find("EnemyBullet") != -1:
 			health -= 1
 			flicker_timeout = 0.5

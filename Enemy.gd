@@ -15,27 +15,28 @@ var current_state = INACTIVE
 var shoot_timer = 0
 var SHOOT_RATE = 0.8
 
+func start_attacking():
+	current_state = ATTACKING
+
 func _fixed_process(delta):
-	var player = get_node("/root/Container/PlayerBody")
-	if current_state == INACTIVE:
-		if player.current_state == player.IN_ROOM && player.current_room == enemy_room:
-			current_state = ATTACKING
-	elif current_state == ATTACKING:
+	if current_state == ATTACKING:
 		if shoot_timer >= SHOOT_RATE:
 			var bullet = bullet_scene.instance()
 			bullet.set_name("EnemyBullet")
 			bullet.set_pos(get_pos())
 			get_parent().add_child(bullet)
+			var player = get_node("/root/Container/PlayerBody")
 			bullet.call("set_target", player.get_pos())
 			shoot_timer = 0
 		else:
 			shoot_timer += delta
 
 func _on_area_enter(value):
-	var parent = value.get_parent()
-	if parent:
-		if parent.get_name().find("PlayerBullet") != -1:
+	var hit_by_entity = value.get_parent()
+	if hit_by_entity:
+		if hit_by_entity.get_name().find("PlayerBullet") != -1:
 			queue_free()
+			get_parent().call("on_enemy_removed")
 
 func _ready():
 	# Called every time the node is added to the scene.
