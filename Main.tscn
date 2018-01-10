@@ -1,0 +1,126 @@
+[gd_scene load_steps=8 format=1]
+
+[ext_resource path="res://Room.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Door.tscn" type="PackedScene" id=2]
+[ext_resource path="res://player.gd" type="Script" id=3]
+[ext_resource path="res://player.png" type="Texture" id=4]
+[ext_resource path="res://Enemy.tscn" type="PackedScene" id=5]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+custom_solver_bias = 0.0
+extents = Vector2( 10, 10 )
+
+[sub_resource type="RectangleShape2D" id=2]
+
+custom_solver_bias = 0.0
+extents = Vector2( 10, 10 )
+
+[node name="Container" type="Node2D"]
+
+[node name="MainRoom" parent="." instance=ExtResource( 1 )]
+
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 640.0
+margin/bottom = 480.0
+
+[node name="RightDoor" parent="MainRoom" instance=ExtResource( 2 )]
+
+transform/pos = Vector2( 617.438, 240 )
+
+[node name="PlayerBody" type="KinematicBody2D" parent="."]
+
+transform/pos = Vector2( 320, 240 )
+input/pickable = false
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 2.51005, 0, 0, 2.50399, 0, 0 )
+shapes/0/trigger = false
+collision/layers = 1
+collision/mask = 1
+collision/margin = 0.08
+script/script = ExtResource( 3 )
+CENTER_ROOM = 0
+KEY_ROOM = 1
+
+[node name="Sprite" type="Sprite" parent="PlayerBody"]
+
+texture = ExtResource( 4 )
+
+[node name="Area2D" type="Area2D" parent="PlayerBody"]
+
+input/pickable = true
+shapes/0/shape = SubResource( 2 )
+shapes/0/transform = Matrix32( 2.51798, 0, 0, 2.51232, 0, 0 )
+shapes/0/trigger = false
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerBody/Area2D"]
+
+transform/scale = Vector2( 2.51798, 2.51232 )
+shape = SubResource( 2 )
+trigger = false
+_update_shape_index = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerBody"]
+
+transform/scale = Vector2( 2.51005, 2.50399 )
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
+
+[node name="EnemyKeyRoom" parent="." instance=ExtResource( 1 )]
+
+margin/left = 640.0
+margin/top = 0.0
+
+[node name="LeftDoor" parent="EnemyKeyRoom" instance=ExtResource( 2 )]
+
+transform/pos = Vector2( 25, 240 )
+
+[node name="EnemyBody" parent="EnemyKeyRoom" instance=ExtResource( 5 )]
+
+transform/pos = Vector2( 150, 110 )
+enemy_room = 1
+
+[node name="EnemyBody1" parent="EnemyKeyRoom" instance=ExtResource( 5 )]
+
+transform/pos = Vector2( 460, 110.008 )
+enemy_room = 1
+
+[node name="EnemyBody2" parent="EnemyKeyRoom" instance=ExtResource( 5 )]
+
+transform/pos = Vector2( 460, 380 )
+enemy_room = 1
+
+[node name="EnemyBody3" parent="EnemyKeyRoom" instance=ExtResource( 5 )]
+
+transform/pos = Vector2( 150, 380 )
+enemy_room = 1
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+visibility/visible = false
+transform/pos = Vector2( 320, 240 )
+transform/scale = Vector2( 9.96891, 7.47652 )
+anchor_mode = 1
+rotating = false
+current = true
+zoom = Vector2( 1, 1 )
+limit/left = -10000000
+limit/top = -10000000
+limit/right = 10000000
+limit/bottom = 10000000
+drag_margin/h_enabled = false
+drag_margin/v_enabled = false
+smoothing/enable = false
+smoothing/speed = 5.0
+drag_margin/left = 0.2
+drag_margin/top = 0.2
+drag_margin/right = 0.2
+drag_margin/bottom = 0.2
+
+
