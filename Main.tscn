@@ -15,13 +15,12 @@ extents = Vector2( 10, 10 )
 [sub_resource type="RectangleShape2D" id=2]
 
 custom_solver_bias = 0.0
-extents = Vector2( 10, 10 )
+extents = Vector2( 12.5828, 10 )
 
 [node name="Container" type="Node2D"]
 
 [node name="MainRoom" parent="." instance=ExtResource( 1 )]
 
-editor/display_folded = true
 margin/left = 0.0
 margin/top = 0.0
 margin/right = 640.0
@@ -33,13 +32,18 @@ transform/pos = Vector2( 617.438, 240 )
 exit_pos = Vector2( 720, 240 )
 exit_room = NodePath("../../EnemyKeyRoom")
 
+[node name="BottomDoor" parent="MainRoom" instance=ExtResource( 2 )]
+
+transform/pos = Vector2( 320, 455 )
+exit_pos = Vector2( 320, 560 )
+exit_room = NodePath("../../BottomRoom")
+
 [node name="PlayerBody" type="KinematicBody2D" parent="."]
 
-editor/display_folded = true
 transform/pos = Vector2( 320, 240 )
 input/pickable = false
 shapes/0/shape = SubResource( 1 )
-shapes/0/transform = Matrix32( 2.51005, 0, 0, 2.50399, 0, 0 )
+shapes/0/transform = Matrix32( 2.02829, 0, 0, 2.25636, -0.190427, -2.40106 )
 shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
@@ -54,9 +58,11 @@ texture = ExtResource( 4 )
 
 [node name="Area2D" type="Area2D" parent="PlayerBody"]
 
+transform/pos = Vector2( -0.494381, -3.06664 )
+transform/scale = Vector2( 0.690617, 0.799965 )
 input/pickable = true
 shapes/0/shape = SubResource( 2 )
-shapes/0/transform = Matrix32( 2.51798, 0, 0, 2.51232, 0, 0 )
+shapes/0/transform = Matrix32( 2.51798, 0, 0, 3.07958, 0, -2.14577e-05 )
 shapes/0/trigger = false
 gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
@@ -65,21 +71,22 @@ angular_damp = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerBody/Area2D"]
 
-transform/scale = Vector2( 2.51798, 2.51232 )
+transform/pos = Vector2( 0, -2.14577e-05 )
+transform/scale = Vector2( 2.51798, 3.07958 )
 shape = SubResource( 2 )
 trigger = false
 _update_shape_index = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerBody"]
 
-transform/scale = Vector2( 2.51005, 2.50399 )
+transform/pos = Vector2( -0.190427, -2.40106 )
+transform/scale = Vector2( 2.02829, 2.25636 )
 shape = SubResource( 1 )
 trigger = false
 _update_shape_index = 0
 
 [node name="EnemyKeyRoom" parent="." instance=ExtResource( 1 )]
 
-editor/display_folded = true
 margin/left = 640.0
 margin/top = 0.0
 script/script = ExtResource( 5 )
@@ -110,8 +117,22 @@ enemy_room = 1
 transform/pos = Vector2( 150, 380 )
 enemy_room = 1
 
+[node name="BottomRoom" parent="." instance=ExtResource( 1 )]
+
+margin/left = 0.0
+margin/top = 480.0
+margin/right = 640.0
+margin/bottom = 960.0
+
+[node name="TopDoor" parent="BottomRoom" instance=ExtResource( 2 )]
+
+transform/pos = Vector2( 320, 25 )
+exit_pos = Vector2( 320, 400 )
+exit_room = NodePath("../../MainRoom")
+
 [node name="Camera2D" type="Camera2D" parent="."]
 
+editor/display_folded = true
 visibility/visible = false
 transform/pos = Vector2( 320, 240 )
 transform/scale = Vector2( 9.96891, 7.47652 )

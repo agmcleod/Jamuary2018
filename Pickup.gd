@@ -11,7 +11,9 @@ func _fixed_process(delta):
 		allow_pickup = true
 
 func _on_area_enter(value):
-	on_pickup()
+	var parent = value.get_parent()
+	if parent && parent.get_name() == "PlayerBody":
+		on_pickup()
 
 func _ready():
 	set_fixed_process(true)

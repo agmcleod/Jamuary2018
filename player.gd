@@ -109,6 +109,8 @@ func _on_area_enter(value):
 			flicker_timeout = 0.5
 			if health == 0:
 				get_tree().change_scene("res://Main.tscn")
+		else:
+			print("Unhandled collision: ", name)
 
 	if goto_next_room:
 		current_state = ENTERING_ROOM
