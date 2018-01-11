@@ -13,7 +13,7 @@ enum EnemyState {
 
 var current_state = INACTIVE
 var shoot_timer = 0
-var SHOOT_RATE = 1
+var SHOOT_RATE = 1.4
 
 func start_attacking():
 	current_state = ATTACKING

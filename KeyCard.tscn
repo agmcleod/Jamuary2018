@@ -3,10 +3,10 @@
 [ext_resource path="res://keycard.png" type="Texture" id=1]
 [ext_resource path="res://KeyCard.gd" type="Script" id=2]
 
-[sub_resource type="ConvexPolygonShape2D" id=1]
+[sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
-points = Vector2Array( 12.796, -6.47522, 14.9467, 6.10611, -2.76111, 22.9523, -23.8384, 10.7441, -23.48, 7.70544, -2.54603, -12.9791 )
+extents = Vector2( 10, 10 )
 
 [node name="Sprite" type="Sprite"]
 
@@ -19,20 +19,19 @@ transform/pos = Vector2( -0.472393, -0.113785 )
 transform/scale = Vector2( 0.481134, 0.585561 )
 input/pickable = true
 shapes/0/shape = SubResource( 1 )
-shapes/0/transform = Matrix32( 1.59827, 0, 0, 1.75217, 4.46269, -7.52174 )
+shapes/0/transform = Matrix32( 3.11074, 0, 0, 3.10721, -2.19898, 0.300093 )
 shapes/0/trigger = false
 gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
 linear_damp = 0.1
 angular_damp = 1.0
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 
-transform/pos = Vector2( 4.46269, -7.52174 )
-transform/scale = Vector2( 1.59827, 1.75217 )
-build_mode = 0
-polygon = Vector2Array( -2.54603, -12.9791, -23.48, 7.70544, -23.8384, 10.7441, -2.76111, 22.9523, 14.9467, 6.10611, 12.796, -6.47522 )
-shape_range = Vector2( 0, 0 )
+transform/pos = Vector2( -2.19898, 0.300093 )
+transform/scale = Vector2( 3.11074, 3.10721 )
+shape = SubResource( 1 )
 trigger = false
+_update_shape_index = 0
 
 

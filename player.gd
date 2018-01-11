@@ -3,6 +3,7 @@ extends KinematicBody2D
 # class member variables go here, for example:
 # var a = 2
 # var b = "textvar"
+onready var key_card_ui_scene = load("KeyCardUI.tscn")
 
 var velocity = 5
 var health = 3
@@ -117,8 +118,12 @@ func _on_area_enter(value):
 func angle_between(one, two):
 	return atan2(one.y - two.y, one.x - two.x)
 
-func give_keycard(keycard):
+func give_keycard():
 	has_keycard = true
+	var camera_canvas = get_node("/root/Container/Camera2D/CanvasLayer")
+	var card = key_card_ui_scene.instance()
+	card.set_pos(Vector2(40, 40))
+	camera_canvas.add_child(card)
 
 func set_modulate(color):
 	get_node("Sprite").set_modulate(color)
