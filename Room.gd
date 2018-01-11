@@ -17,6 +17,7 @@ func on_enemy_removed():
 
 	if enemy_count <= 1 && door:
 		door.call("set_locked", false)
+		on_enemies_dead()
 
 
 func on_player_enter():

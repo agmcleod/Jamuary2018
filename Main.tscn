@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=1]
+[gd_scene load_steps=9 format=1]
 
 [ext_resource path="res://Room.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Door.tscn" type="PackedScene" id=2]
 [ext_resource path="res://player.gd" type="Script" id=3]
 [ext_resource path="res://player.png" type="Texture" id=4]
-[ext_resource path="res://Enemy.tscn" type="PackedScene" id=5]
+[ext_resource path="res://EnemyRoom.gd" type="Script" id=5]
+[ext_resource path="res://Enemy.tscn" type="PackedScene" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -78,6 +79,7 @@ _update_shape_index = 0
 
 margin/left = 640.0
 margin/top = 0.0
+script/script = ExtResource( 5 )
 
 [node name="LeftDoor" parent="EnemyKeyRoom" instance=ExtResource( 2 )]
 
@@ -85,22 +87,22 @@ transform/pos = Vector2( 25, 240 )
 exit_pos = Vector2( 560, 240 )
 exit_room = NodePath("../../MainRoom")
 
-[node name="EnemyBody" parent="EnemyKeyRoom" instance=ExtResource( 5 )]
+[node name="EnemyBody" parent="EnemyKeyRoom" instance=ExtResource( 6 )]
 
 transform/pos = Vector2( 150, 110 )
 enemy_room = 1
 
-[node name="EnemyBody1" parent="EnemyKeyRoom" instance=ExtResource( 5 )]
+[node name="EnemyBody1" parent="EnemyKeyRoom" instance=ExtResource( 6 )]
 
 transform/pos = Vector2( 460, 110.008 )
 enemy_room = 1
 
-[node name="EnemyBody2" parent="EnemyKeyRoom" instance=ExtResource( 5 )]
+[node name="EnemyBody2" parent="EnemyKeyRoom" instance=ExtResource( 6 )]
 
 transform/pos = Vector2( 460, 380 )
 enemy_room = 1
 
-[node name="EnemyBody3" parent="EnemyKeyRoom" instance=ExtResource( 5 )]
+[node name="EnemyBody3" parent="EnemyKeyRoom" instance=ExtResource( 6 )]
 
 transform/pos = Vector2( 150, 380 )
 enemy_room = 1

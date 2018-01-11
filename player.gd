@@ -27,6 +27,7 @@ var flicker_timeout = 0
 var shoot_timeout = 0
 var color_mod = Color(1, 1, 1, 1)
 var direction = Vector2(0, -1)
+var has_keycard = false
 
 func _fixed_process(delta):
 	if current_state == IN_ROOM:
@@ -107,8 +108,6 @@ func _on_area_enter(value):
 			flicker_timeout = 0.5
 			if health == 0:
 				get_tree().change_scene("res://Main.tscn")
-		else:
-			print(name, " not handled")
 
 	if goto_next_room:
 		current_state = ENTERING_ROOM
@@ -117,6 +116,9 @@ func _on_area_enter(value):
 
 func angle_between(one, two):
 	return atan2(one.y - two.y, one.x - two.x)
+
+func give_keycard(keycard):
+	has_keycard = true
 
 func set_modulate(color):
 	get_node("Sprite").set_modulate(color)
