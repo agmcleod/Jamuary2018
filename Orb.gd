@@ -29,9 +29,6 @@ func _set_velocity_for_bullet(bullet):
 	var x_diff = abs(abs(orb_pos.x) - abs(bullet_pos.x))
 	var y_diff = abs(abs(orb_pos.y) - abs(bullet_pos.y))
 
-	print(orb_pos, " ", bullet_pos)
-	print(x_diff, ", ", y_diff)
-
 	var velocity = bullet.get_velocity()
 	if x_diff < y_diff:
 		bullet.set_velocity(velocity.x, -velocity.y)

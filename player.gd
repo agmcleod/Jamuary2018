@@ -4,9 +4,11 @@ extends KinematicBody2D
 # var a = 2
 # var b = "textvar"
 onready var key_card_ui_scene = load("KeyCardUI.tscn")
+onready var hack_tool_ui_scene = load("HackToolUI.tscn")
 
 var velocity = 5
 var health = 3
+var has_hacktool = false
 
 enum PlayerState {
 	IN_ROOM, ENTERING_ROOM
@@ -15,6 +17,7 @@ enum PlayerState {
 export var CENTER_ROOM = 0
 export var KEY_ROOM = 1
 export var ORB_ROOM = 2
+export var TOP_ROOM = 3
 
 onready var bullet_scene = load("Bullet.tscn")
 
@@ -144,6 +147,13 @@ func give_keycard(name):
 	card.set_name(name + "_key_card_ui")
 	camera_canvas.add_child(card)
 	key_cards.append(name)
+
+func give_hacktool():
+	has_hacktool = true
+	var hack_tool = hack_tool_ui_scene.instance()
+	hack_tool.set_pos(Vector2(40, 30))
+	var camera_canvas = get_node("/root/Container/Camera2D/CanvasLayer")
+	camera_canvas.add_child(hack_tool)
 
 func has_keycard(name):
 	return key_cards.has(name)
