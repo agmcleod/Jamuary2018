@@ -6,7 +6,16 @@ extends Sprite
 
 export var locked = false
 export var exit_pos = Vector2(0, 0)
+export var required_key_card = ""
 export (NodePath) var exit_room
+
+func can_open(player):
+	if is_locked() && player.has_keycard(required_key_card):
+		set_locked(false)
+		player.use_keycard(required_key_card)
+		return true
+
+	return false
 
 func is_locked():
 	return locked

@@ -1,4 +1,4 @@
-extends Sprite
+extends AnimatedSprite
 
 var pickup_timeout = 0.4
 var allow_pickup = false

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=1]
+[gd_scene load_steps=11 format=1]
 
 [ext_resource path="res://Room.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Door.tscn" type="PackedScene" id=2]
@@ -6,6 +6,8 @@
 [ext_resource path="res://player.png" type="Texture" id=4]
 [ext_resource path="res://EnemyRoom.gd" type="Script" id=5]
 [ext_resource path="res://Enemy.tscn" type="PackedScene" id=6]
+[ext_resource path="res://OrbRoom.gd" type="Script" id=7]
+[ext_resource path="res://Orb.tscn" type="PackedScene" id=8]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -30,16 +32,20 @@ margin/bottom = 480.0
 
 transform/pos = Vector2( 617.438, 240 )
 exit_pos = Vector2( 720, 240 )
+required_key_card = ""
 exit_room = NodePath("../../EnemyKeyRoom")
 
 [node name="BottomDoor" parent="MainRoom" instance=ExtResource( 2 )]
 
-transform/pos = Vector2( 320, 455 )
+transform/pos = Vector2( 320.551, 455 )
+locked = true
 exit_pos = Vector2( 320, 560 )
+required_key_card = "blue"
 exit_room = NodePath("../../BottomRoom")
 
 [node name="PlayerBody" type="KinematicBody2D" parent="."]
 
+editor/display_folded = true
 transform/pos = Vector2( 320, 240 )
 input/pickable = false
 shapes/0/shape = SubResource( 1 )
@@ -51,6 +57,7 @@ collision/margin = 0.08
 script/script = ExtResource( 3 )
 CENTER_ROOM = 0
 KEY_ROOM = 1
+ORB_ROOM = 2
 
 [node name="Sprite" type="Sprite" parent="PlayerBody"]
 
@@ -87,6 +94,7 @@ _update_shape_index = 0
 
 [node name="EnemyKeyRoom" parent="." instance=ExtResource( 1 )]
 
+editor/display_folded = true
 margin/left = 640.0
 margin/top = 0.0
 script/script = ExtResource( 5 )
@@ -95,6 +103,7 @@ script/script = ExtResource( 5 )
 
 transform/pos = Vector2( 25, 240 )
 exit_pos = Vector2( 560, 240 )
+required_key_card = ""
 exit_room = NodePath("../../MainRoom")
 
 [node name="EnemyBody" parent="EnemyKeyRoom" instance=ExtResource( 6 )]
@@ -123,12 +132,27 @@ margin/left = 0.0
 margin/top = 480.0
 margin/right = 640.0
 margin/bottom = 960.0
+script/script = ExtResource( 7 )
+room_id = 2
 
 [node name="TopDoor" parent="BottomRoom" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 320, 25 )
 exit_pos = Vector2( 320, 400 )
+required_key_card = ""
 exit_room = NodePath("../../MainRoom")
+
+[node name="Orb1" parent="BottomRoom" instance=ExtResource( 8 )]
+
+transform/pos = Vector2( 259, 130 )
+
+[node name="Orb2" parent="BottomRoom" instance=ExtResource( 8 )]
+
+transform/pos = Vector2( 366, 234 )
+
+[node name="Orb3" parent="BottomRoom" instance=ExtResource( 8 )]
+
+transform/pos = Vector2( 259, 346 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 

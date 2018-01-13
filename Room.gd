@@ -17,8 +17,7 @@ func on_enemy_removed():
 
 	if enemy_count <= 1 && door:
 		door.call("set_locked", false)
-		on_enemies_dead()
-
+		on_goal_completed()
 
 func on_player_enter():
 	var has_enemies = false
@@ -33,6 +32,5 @@ func on_player_enter():
 				child.call("set_locked", true)
 
 func _ready():
-	# Called every time the node is added to the scene.
-	# Initialization here
+	add_to_group("rooms")
 	pass

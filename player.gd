@@ -14,6 +14,7 @@ enum PlayerState {
 
 export var CENTER_ROOM = 0
 export var KEY_ROOM = 1
+export var ORB_ROOM = 2
 
 onready var bullet_scene = load("Bullet.tscn")
 
@@ -28,7 +29,13 @@ var flicker_timeout = 0
 var shoot_timeout = 0
 var color_mod = Color(1, 1, 1, 1)
 var direction = Vector2(0, -1)
-var has_keycard = false
+var key_cards = []
+
+func _get_current_room():
+	var rooms = get_tree().get_nodes_in_group("rooms")
+	for room in rooms:
+		if room.room_id == current_room:
+			return room
 
 func _fixed_process(delta):
 	if current_state == IN_ROOM:
@@ -45,23 +52,32 @@ func _fixed_process(delta):
 		if up:
 			move(Vector2(0, -velocity))
 			direction.y = -1
+			set_rotd(0)
 		if down:
 			move(Vector2(0, velocity))
 			direction.y = 1
+			set_rotd(180)
 		if left:
 			move(Vector2(-velocity, 0))
 			direction.x = -1
+			set_rotd(90)
 		if right:
 			move(Vector2(velocity, 0))
 			direction.x = 1
+			set_rotd(270)
 
 		if Input.is_action_pressed("shoot"):
 			if shoot_timeout <= 0:
 				shoot_timeout = SHOOT_COOLDOWN
 				var bullet = bullet_scene.instance()
 				bullet.set_name("PlayerBullet")
-				bullet.set_pos(get_pos())
-				get_parent().add_child(bullet)
+				var current_room = _get_current_room()
+				var current_room_pos = current_room.get_pos()
+				var player_pos = get_pos()
+				player_pos.x -= current_room_pos.x
+				player_pos.y -= current_room_pos.y
+				bullet.set_pos(player_pos)
+				current_room.add_child(bullet)
 				var pos = get_pos()
 				bullet.call("set_velocity", 450, 450)
 				bullet.call("set_target", Vector2(pos.x + direction.x, pos.y + direction.y))
@@ -97,7 +113,7 @@ func _on_area_enter(value):
 	if parent:
 		var door = parent
 		var name = door.get_name()
-		if name.find("Door") != -1 && !door.call("is_locked"):
+		if name.find("Door") != -1 && (!door.call("is_locked") || door.can_open(self)):
 			goto_next_room = true
 			var room = door.get_node(door.exit_room)
 			move_camera_to_room(room)
@@ -109,8 +125,8 @@ func _on_area_enter(value):
 			flicker_timeout = 0.5
 			if health == 0:
 				get_tree().change_scene("res://Main.tscn")
-		else:
-			print("Unhandled collision: ", name)
+		# else:
+			# print("Unhandled collision: ", name)
 
 	if goto_next_room:
 		current_state = ENTERING_ROOM
@@ -120,15 +136,25 @@ func _on_area_enter(value):
 func angle_between(one, two):
 	return atan2(one.y - two.y, one.x - two.x)
 
-func give_keycard():
-	has_keycard = true
+func give_keycard(name):
 	var camera_canvas = get_node("/root/Container/Camera2D/CanvasLayer")
 	var card = key_card_ui_scene.instance()
-	card.set_pos(Vector2(40, 40))
+	card.set_animation(name)
+	card.set_pos(Vector2(40, 30))
+	card.set_name(name + "_key_card_ui")
 	camera_canvas.add_child(card)
+	key_cards.append(name)
+
+func has_keycard(name):
+	return key_cards.has(name)
 
 func set_modulate(color):
 	get_node("Sprite").set_modulate(color)
+
+func use_keycard(name):
+	key_cards.remove(key_cards.find(name))
+	var camera_canvas = get_node("/root/Container/Camera2D/CanvasLayer")
+	camera_canvas.get_node(name + "_key_card_ui").queue_free()
 
 func _ready():
 	# Called every time the node is added to the scene.
