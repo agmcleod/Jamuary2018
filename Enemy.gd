@@ -4,8 +4,10 @@ extends KinematicBody2D
 # var a = 2
 # var b = "textvar"
 export var enemy_room = 0
+export var shielded = false
 
 onready var bullet_scene = load("Bullet.tscn")
+onready var shield_scene = load("Shield.tscn")
 
 enum EnemyState {
 	INACTIVE, ATTACKING
@@ -33,7 +35,7 @@ func _fixed_process(delta):
 
 func _on_area_enter(value):
 	var hit_by_entity = value.get_parent()
-	if hit_by_entity:
+	if hit_by_entity && !shielded:
 		if hit_by_entity.get_name().find("PlayerBullet") != -1:
 			queue_free()
 			get_parent().call("on_enemy_removed")
@@ -43,4 +45,7 @@ func _ready():
 	# Initialization here
 	set_fixed_process(true)
 	get_node("Area2D").connect("area_enter", self, "_on_area_enter")
+	if shielded:
+		var shield = shield_scene.instance()
+		add_child(shield)
 	pass

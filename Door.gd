@@ -5,6 +5,7 @@ extends Sprite
 # var b = "textvar"
 
 export var locked = false
+export var hackable = false
 export var exit_pos = Vector2(0, 0)
 export var required_key_card = ""
 export (NodePath) var exit_room
