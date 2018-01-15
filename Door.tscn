@@ -14,7 +14,9 @@ transform/pos = Vector2( 615, 215 )
 texture = ExtResource( 1 )
 script/script = ExtResource( 2 )
 locked = false
+hackable = false
 exit_pos = Vector2( 0, 0 )
+required_key_card = ""
 exit_room = null
 
 [node name="StaticBody2D" type="Area2D" parent="."]

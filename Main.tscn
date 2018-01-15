@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=1]
+[gd_scene load_steps=13 format=1]
 
 [ext_resource path="res://Room.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Door.tscn" type="PackedScene" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://OrbRoom.gd" type="Script" id=7]
 [ext_resource path="res://Orb.tscn" type="PackedScene" id=8]
 [ext_resource path="res://TopRoom.gd" type="Script" id=9]
+[ext_resource path="res://Panel.tscn" type="PackedScene" id=10]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -32,16 +33,13 @@ margin/bottom = 480.0
 [node name="RightDoor" parent="MainRoom" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 617.438, 240 )
-hackable = false
 exit_pos = Vector2( 720, 240 )
-required_key_card = ""
 exit_room = NodePath("../../EnemyKeyRoom")
 
 [node name="BottomDoor" parent="MainRoom" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 320.551, 455 )
 locked = true
-hackable = false
 exit_pos = Vector2( 320, 560 )
 required_key_card = "blue"
 exit_room = NodePath("../../BottomRoom")
@@ -50,7 +48,6 @@ exit_room = NodePath("../../BottomRoom")
 
 transform/pos = Vector2( 320, 25 )
 locked = true
-hackable = false
 exit_pos = Vector2( 320, -80 )
 required_key_card = "yellow"
 exit_room = NodePath("../../TopRoom")
@@ -61,7 +58,6 @@ transform/pos = Vector2( 24.0211, 240 )
 locked = true
 hackable = true
 exit_pos = Vector2( -105, 240 )
-required_key_card = ""
 exit_room = NodePath("../../HackRoom")
 
 [node name="PlayerBody" type="KinematicBody2D" parent="."]
@@ -124,9 +120,7 @@ script/script = ExtResource( 5 )
 [node name="LeftDoor" parent="EnemyKeyRoom" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 25, 240 )
-hackable = false
 exit_pos = Vector2( 560, 240 )
-required_key_card = ""
 exit_room = NodePath("../../MainRoom")
 
 [node name="EnemyBody" parent="EnemyKeyRoom" instance=ExtResource( 6 )]
@@ -162,9 +156,7 @@ room_id = 2
 [node name="TopDoor" parent="BottomRoom" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 320, 25 )
-hackable = false
 exit_pos = Vector2( 320, 400 )
-required_key_card = ""
 exit_room = NodePath("../../MainRoom")
 
 [node name="Orb1" parent="BottomRoom" instance=ExtResource( 8 )]
@@ -221,9 +213,7 @@ script/script = ExtResource( 9 )
 [node name="BottomDoor" parent="TopRoom" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 320, 455 )
-hackable = false
 exit_pos = Vector2( 320, 80 )
-required_key_card = ""
 exit_room = NodePath("../../MainRoom")
 
 [node name="EnemyBody" parent="TopRoom" instance=ExtResource( 6 )]
@@ -264,9 +254,7 @@ margin/bottom = 480.0
 [node name="RightDoor" parent="HackRoom" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 615, 240 )
-hackable = false
 exit_pos = Vector2( 80, 240 )
-required_key_card = ""
 exit_room = NodePath("../../MainRoom")
 
 [node name="EnemyBody" parent="HackRoom" instance=ExtResource( 6 )]
@@ -278,5 +266,9 @@ shielded = true
 
 transform/pos = Vector2( 490, 128 )
 shielded = true
+
+[node name="Panel" parent="HackRoom" instance=ExtResource( 10 )]
+
+transform/pos = Vector2( 320, 355 )
 
 

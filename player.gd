@@ -6,6 +6,7 @@ extends KinematicBody2D
 onready var key_card_ui_scene = load("KeyCardUI.tscn")
 onready var hack_tool_ui_scene = load("HackToolUI.tscn")
 onready var door_hack_scene = load("DoorHack.tscn")
+onready var hot_wire_scene = load("HotWire.tscn")
 
 var velocity = 5
 var health = 3
@@ -90,9 +91,14 @@ func _fixed_process(delta):
 			current_state = HACKING
 			if current_hack_type == DOOR:
 				var door_hack = door_hack_scene.instance()
-				door_hack.connect("done_hacking", self, "_on_done_hacking_door")
+				door_hack.connect("done_hacking", self, "_on_done_hacking")
 				door_hack.set_pos(get_pos())
 				get_parent().add_child(door_hack)
+			elif current_hack_type == PANEL:
+				var hot_wire = hot_wire_scene.instance()
+				var camera_canvas = get_node("/root/Container/Camera2D/CanvasLayer")
+				hot_wire.set_pos(Vector2(320, 380))
+				camera_canvas.add_child(hot_wire)
 
 		if current_state == IN_ROOM && Input.is_action_pressed("shoot"):
 			if shoot_timeout <= 0:
@@ -129,7 +135,7 @@ func _fixed_process(delta):
 	if shoot_timeout > 0:
 		shoot_timeout -= delta
 
-func _on_done_hacking_door():
+func _on_done_hacking():
 	current_state = IN_ROOM
 	get_node(hacking_door_path).call("set_locked", false)
 	_cleanup_hacking_ui_state()
@@ -146,6 +152,11 @@ func _move_to_next_room(door):
 	current_room = room.room_id
 	set_pos(door.exit_pos)
 	room.call("on_player_enter")
+
+func _on_body_enter(body):
+	if body.get_name().find("Panel") != -1:
+		_add_hacking_ui()
+		current_hack_type = PANEL
 
 func _on_area_enter(body):
 	var parent = body.get_parent()
@@ -168,8 +179,8 @@ func _on_area_enter(body):
 			flicker_timeout = 0.5
 			if health == 0:
 				get_tree().change_scene("res://Main.tscn")
-		# else:
-			# print("Unhandled collision: ", name)
+		else:
+			print("Unhandled collision: ", name)
 
 	if goto_next_room:
 		current_state = ENTERING_ROOM
@@ -222,5 +233,6 @@ func _ready():
 	get_node("Area2D").connect("area_exit", self, "_on_area_exit")
 	set_fixed_process(true)
 	set_modulate(color_mod)
+	get_node("Area2D").connect("body_enter", self, "_on_body_enter")
 
 	pass
