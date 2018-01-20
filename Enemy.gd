@@ -20,6 +20,11 @@ var SHOOT_RATE = 1.4
 func start_attacking():
 	current_state = ATTACKING
 
+func remove_shield():
+	shielded = false
+	get_node("shield").queue_free()
+	remove_from_group("shielded_enemies")
+
 func _fixed_process(delta):
 	if current_state == ATTACKING:
 		if shoot_timer >= SHOOT_RATE:
@@ -47,5 +52,7 @@ func _ready():
 	get_node("Area2D").connect("area_enter", self, "_on_area_enter")
 	if shielded:
 		var shield = shield_scene.instance()
+		shield.set_name("shield")
 		add_child(shield)
+		add_to_group("shielded_enemies")
 	pass

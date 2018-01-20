@@ -1,4 +1,4 @@
-extends "Hover.gd"
+extends "../Hover.gd"
 
 export var cable_color = ""
 signal clicked(color)

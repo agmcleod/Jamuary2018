@@ -1,4 +1,4 @@
-extends "Hover.gd"
+extends "../Hover.gd"
 
 export var position_name = ""
 signal clicked(position_name)
