@@ -270,5 +270,6 @@ func _ready():
 	set_fixed_process(true)
 	set_modulate(color_mod)
 	get_node("Area2D").connect("body_enter", self, "_on_body_enter")
+	get_node("Area2D").connect("body_exit", self, "_on_body_exit")
 
 	pass

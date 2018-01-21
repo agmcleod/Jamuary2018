@@ -227,7 +227,7 @@ texture = ExtResource( 3 )
 
 transform/pos = Vector2( 320, 455 )
 transform/rot = 90.0
-exit_pos = Vector2( 320, 80 )
+exit_pos = Vector2( 320, 90 )
 exit_room = NodePath("../../MainRoom")
 
 [node name="EnemyBody" parent="TopRoom" instance=ExtResource( 9 )]
