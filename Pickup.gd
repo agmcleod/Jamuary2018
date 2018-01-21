@@ -13,6 +13,7 @@ func _fixed_process(delta):
 func _on_area_enter(value):
 	var parent = value.get_parent()
 	if parent && parent.get_name() == "PlayerBody":
+		get_node("/root/Container/SamplePlayer2D").play("Pickup")
 		on_pickup()
 
 func _ready():

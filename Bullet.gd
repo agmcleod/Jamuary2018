@@ -14,6 +14,12 @@ func _fixed_process(delta):
 	pos.y += velocity.y * delta
 	set_pos(pos)
 
+func play_sound(name):
+	if name == "enemy":
+		get_node("SamplePlayer2D").play("EnemyLaser")
+	elif name == "player":
+		get_node("SamplePlayer2D").play("PlayerLaser")
+
 func set_target(target_pos):
 	var current_pos = get_pos()
 	current_pos.x += get_parent().get_pos().x

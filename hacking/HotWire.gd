@@ -19,6 +19,9 @@ var current_instruction = SHOW_WIRE_CLICK
 var instruction_label
 var label_node = CustomLabel.new()
 
+func _play_click_sound():
+	get_node("SamplePlayer2D").play("Click")
+
 func _show_wire():
 	positions[to_selected_side] = from_selected_color
 	get_node(from_selected_color + to_selected_side).show()
@@ -28,12 +31,14 @@ func _show_wire():
 		emit_signal("finished", positions)
 
 func _on_top_clicked(color):
+	_play_click_sound()
 	if positions["left"] != color && positions["center"] != color && positions["right"] != color:
 		from_selected_color = color
 		if to_selected_side != "":
 			_show_wire()
 
 func _on_bottom_clicked(side):
+	_play_click_sound()
 	if current_instruction == SHOW_CONNECTOR_CLICK:
 		get_node(instruction_label).queue_free()
 		current_instruction = NONE
@@ -43,6 +48,7 @@ func _on_bottom_clicked(side):
 			_show_wire()
 
 func _on_wire_clear(color):
+	_play_click_sound()
 	if positions["left"] == color:
 		positions["left"] = ""
 	elif positions["center"] == color:

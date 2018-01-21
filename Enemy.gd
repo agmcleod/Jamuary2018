@@ -32,6 +32,7 @@ func _fixed_process(delta):
 			bullet.set_name("EnemyBullet")
 			bullet.set_pos(get_pos())
 			get_parent().add_child(bullet)
+			bullet.call("play_sound", "enemy")
 			var player = get_node("/root/Container/PlayerBody")
 			bullet.call("set_target", player.get_pos())
 			shoot_timer = 0
@@ -40,10 +41,15 @@ func _fixed_process(delta):
 
 func _on_area_enter(value):
 	var hit_by_entity = value.get_parent()
-	if hit_by_entity && !shielded:
+	if hit_by_entity:
 		if hit_by_entity.get_name().find("PlayerBullet") != -1:
-			queue_free()
-			get_parent().call("on_enemy_removed")
+			if !shielded:
+				get_node("/root/Container/SamplePlayer2D").play("Hit_Hurt")
+				queue_free()
+				get_parent().call("on_enemy_removed")
+			else:
+				get_node("/root/Container/SamplePlayer2D").play("Hit_Shield")
+
 
 func _ready():
 	# Called every time the node is added to the scene.

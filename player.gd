@@ -139,6 +139,7 @@ func _fixed_process(delta):
 				player_pos.y -= current_room_pos.y
 				bullet.set_pos(player_pos)
 				current_room.add_child(bullet)
+				bullet.call("play_sound", "player")
 				var pos = get_pos()
 				bullet.call("set_velocity", 450, 450)
 				bullet.call("set_target", Vector2(pos.x + direction.x, pos.y + direction.y))
@@ -210,6 +211,7 @@ func _on_area_enter(body):
 				_add_hacking_ui()
 		elif name.find("EnemyBullet") != -1:
 			health -= 1
+			get_node("SamplePlayer2D").play("Hit_Hurt")
 			flicker_timeout = 0.5
 			for node in get_tree().get_nodes_in_group("health_bars"):
 				node.queue_free()
@@ -223,6 +225,7 @@ func _on_area_enter(body):
 		current_state = ENTERING_ROOM
 		camera_start_pos.x = camera.get_pos().x
 		camera_start_pos.y = camera.get_pos().y
+		get_node("SamplePlayer2D").play("Door")
 
 func _cleanup_hacking_ui_state():
 	get_node("/root/Container/Camera2D/CanvasLayer/hack_label").queue_free()

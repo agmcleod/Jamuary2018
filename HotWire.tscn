@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=1]
+[gd_scene load_steps=19 format=1]
 
 [ext_resource path="res://hotwirepanel.png" type="Texture" id=1]
 [ext_resource path="res://hacking/HotWire.gd" type="Script" id=2]
@@ -16,6 +16,16 @@
 [ext_resource path="res://wires/blueright.png" type="Texture" id=14]
 [ext_resource path="res://wires/bottomend.png" type="Texture" id=15]
 [ext_resource path="res://hacking/BottomConnector.gd" type="Script" id=16]
+[ext_resource path="res://Click.wav" type="Sample" id=17]
+
+[sub_resource type="SampleLibrary" id=1]
+
+samples/Click = {
+"db": 0.0,
+"pitch": 1.0,
+"priority": 0,
+"sample": ExtResource( 17 )
+}
 
 [node name="Sprite" type="Sprite"]
 
@@ -133,5 +143,16 @@ transform/pos = Vector2( 40.6402, 74.749 )
 texture = ExtResource( 15 )
 script/script = ExtResource( 16 )
 position_name = "right"
+
+[node name="SamplePlayer2D" type="SamplePlayer2D" parent="."]
+
+params/volume_db = 0.0
+params/pitch_scale = 1.0
+params/attenuation/min_distance = 1.0
+params/attenuation/max_distance = 2048.0
+params/attenuation/distance_exp = 1.0
+config/polyphony = 1
+config/samples = SubResource( 1 )
+config/pitch_random = 0.0
 
 

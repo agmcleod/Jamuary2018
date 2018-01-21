@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=1]
+[gd_scene load_steps=26 format=1]
 
 [ext_resource path="res://Game.gd" type="Script" id=1]
 [ext_resource path="res://Room.tscn" type="PackedScene" id=2]
@@ -17,6 +17,10 @@
 [ext_resource path="res://Panel.tscn" type="PackedScene" id=15]
 [ext_resource path="res://player.gd" type="Script" id=16]
 [ext_resource path="res://player.png" type="Texture" id=17]
+[ext_resource path="res://Door.wav" type="Sample" id=18]
+[ext_resource path="res://Hit_Hurt.wav" type="Sample" id=19]
+[ext_resource path="res://Hit_Shield.wav" type="Sample" id=20]
+[ext_resource path="res://Pickup.wav" type="Sample" id=21]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -27,6 +31,42 @@ extents = Vector2( 10, 10 )
 
 custom_solver_bias = 0.0
 extents = Vector2( 12.5828, 10 )
+
+[sub_resource type="SampleLibrary" id=3]
+
+samples/Door = {
+"db": 0.0,
+"pitch": 1.0,
+"priority": 0,
+"sample": ExtResource( 18 )
+}
+samples/Hit_Hurt = {
+"db": 0.0,
+"pitch": 1.0,
+"priority": 0,
+"sample": ExtResource( 19 )
+}
+
+[sub_resource type="SampleLibrary" id=4]
+
+samples/Hit_Hurt = {
+"db": 0.0,
+"pitch": 1.0,
+"priority": 0,
+"sample": ExtResource( 19 )
+}
+samples/Hit_Shield = {
+"db": 0.0,
+"pitch": 1.0,
+"priority": 0,
+"sample": ExtResource( 20 )
+}
+samples/Pickup = {
+"db": 0.0,
+"pitch": 1.0,
+"priority": 0,
+"sample": ExtResource( 21 )
+}
 
 [node name="Container" type="Node2D"]
 
@@ -96,6 +136,7 @@ texture = ExtResource( 7 )
 
 [node name="EnemyKeyRoom" parent="." instance=ExtResource( 2 )]
 
+editor/display_folded = true
 margin/left = 640.0
 margin/top = 0.0
 script/script = ExtResource( 8 )
@@ -134,6 +175,7 @@ enemy_room = 1
 
 [node name="BottomRoom" parent="." instance=ExtResource( 2 )]
 
+editor/display_folded = true
 margin/left = 0.0
 margin/top = 480.0
 margin/right = 640.0
@@ -211,6 +253,7 @@ transform/pos = Vector2( 540, 25 )
 
 [node name="TopRoom" parent="." instance=ExtResource( 2 )]
 
+editor/display_folded = true
 margin/left = 0.0
 margin/top = -480.0
 margin/right = 640.0
@@ -260,6 +303,7 @@ transform/pos = Vector2( 535, 140 )
 
 [node name="HackRoom" parent="." instance=ExtResource( 2 )]
 
+editor/display_folded = true
 margin/left = -640.0
 margin/top = 0.0
 margin/right = 0.0
@@ -295,7 +339,6 @@ transform/pos = Vector2( 320, 355 )
 
 [node name="PlayerBody" type="KinematicBody2D" parent="."]
 
-editor/display_folded = true
 transform/pos = Vector2( 320, 240 )
 input/pickable = false
 shapes/0/shape = SubResource( 1 )
@@ -342,5 +385,27 @@ transform/scale = Vector2( 2.02829, 2.25636 )
 shape = SubResource( 1 )
 trigger = false
 _update_shape_index = 0
+
+[node name="SamplePlayer2D" type="SamplePlayer2D" parent="PlayerBody"]
+
+params/volume_db = 0.0
+params/pitch_scale = 1.0
+params/attenuation/min_distance = 1.0
+params/attenuation/max_distance = 2048.0
+params/attenuation/distance_exp = 1.0
+config/polyphony = 1
+config/samples = SubResource( 3 )
+config/pitch_random = 0.0
+
+[node name="SamplePlayer2D" type="SamplePlayer2D" parent="."]
+
+params/volume_db = 0.0
+params/pitch_scale = 1.0
+params/attenuation/min_distance = 1.0
+params/attenuation/max_distance = 2048.0
+params/attenuation/distance_exp = 1.0
+config/polyphony = 1
+config/samples = SubResource( 4 )
+config/pitch_random = 0.0
 
 

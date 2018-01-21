@@ -45,6 +45,7 @@ func _on_area_enter(body):
 			var animated_sprite = get_node("AnimatedSprite")
 			animated_sprite.set_animation("lit")
 			_check_if_unlocked()
+			get_node("SamplePlayer2D").play("OrbHit")
 
 func _fixed_process(delta):
 	if hit && !permanently_hit:
