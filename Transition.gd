@@ -4,9 +4,12 @@ extends CanvasLayer
 var path = ""
 
 # PUBLIC FUNCTION. CALLED WHENEVER YOU WANT TO CHANGE SCENE
-func fade_to(scn_path):
+func fade_to(scn_path, color):
 	self.path = scn_path # store the scene path
-	get_node("AnimationPlayer").play("fade") # play the transition animation
+	if color == "red":
+		get_node("AnimationPlayer").play("fadeRed")
+	else:
+		get_node("AnimationPlayer").play("fade")
 
 # PRIVATE FUNCTION. CALLED AT THE MIDDLE OF THE TRANSITION ANIMATION
 func change_scene():

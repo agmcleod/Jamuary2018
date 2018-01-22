@@ -217,7 +217,8 @@ func _on_area_enter(body):
 				node.queue_free()
 				break
 			if health == 0:
-				get_tree().change_scene("res://Main.tscn")
+				Transition.show()
+				Transition.fade_to("res://Main.tscn", "red")
 		# else:
 		# 	print("Unhandled collision: ", name)
 
