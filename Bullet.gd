@@ -25,14 +25,13 @@ func set_target(target_pos):
 	current_pos.x += get_parent().get_pos().x
 	current_pos.y += get_parent().get_pos().y
 
-	# print(current_pos, target_pos, rad2deg(atan2(target_pos.y - current_pos.y, target_pos.x - current_pos.x)))
-
 	var angle = atan2(target_pos.y - current_pos.y, target_pos.x - current_pos.x)
 	angle = deg2rad(round(rad2deg(angle) / 45) * 45)
 	velocity.x *= cos(angle)
 	velocity.y *= sin(angle)
 
 	get_node("Area2D").connect("area_enter", self, "_on_area_enter")
+	return angle
 
 func get_velocity():
 	return velocity

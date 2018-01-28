@@ -138,7 +138,6 @@ texture = ExtResource( 7 )
 
 [node name="EnemyKeyRoom" parent="." instance=ExtResource( 2 )]
 
-editor/display_folded = true
 margin/left = 640.0
 margin/top = 0.0
 script/script = ExtResource( 8 )

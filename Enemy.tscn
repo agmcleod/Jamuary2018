@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=1]
+[gd_scene load_steps=6 format=1]
 
 [ext_resource path="res://Enemy.gd" type="Script" id=1]
 [ext_resource path="res://enemy.png" type="Texture" id=2]
+[ext_resource path="res://enemy-turret.png" type="Texture" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -59,5 +60,11 @@ transform/scale = Vector2( 3.17844, 3.17569 )
 shape = SubResource( 2 )
 trigger = false
 _update_shape_index = 0
+
+[node name="Turret" type="Sprite" parent="."]
+
+transform/pos = Vector2( -0.0829544, -0.165913 )
+texture = ExtResource( 3 )
+offset = Vector2( 1, 1 )
 
 

@@ -34,7 +34,8 @@ func _fixed_process(delta):
 			get_parent().add_child(bullet)
 			bullet.call("play_sound", "enemy")
 			var player = get_node("/root/Container/PlayerBody")
-			bullet.call("set_target", player.get_pos())
+			var angle = bullet.call("set_target", player.get_pos())
+			get_node("Turret").set_rot(-angle + deg2rad(45))
 			shoot_timer = 0
 		else:
 			shoot_timer += delta
