@@ -20,7 +20,7 @@ var instruction_label
 var label_node = CustomLabel.new()
 
 func _play_click_sound():
-	get_node("SamplePlayer2D").play("Click")
+	$SamplePlayer2D.play()
 
 func _show_wire():
 	positions[to_selected_side] = from_selected_color

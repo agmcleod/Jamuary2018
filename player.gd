@@ -50,7 +50,7 @@ func _add_hacking_ui():
 	label.set_align(Label.ALIGN_CENTER)
 	camera_canvas.add_child(label)
 	var size = label.get_size()
-	label.set_pos(Vector2(320 - size.x / 2, 240 - size.y / 2))
+	label.rect_position = Vector2(320 - size.x / 2, 240 - size.y / 2)
 
 func _get_current_room():
 	var rooms = get_tree().get_nodes_in_group("rooms")
@@ -70,9 +70,8 @@ func _on_hotwire_finished(positions):
 
 		get_node("/root/Container/Camera2D/CanvasLayer/HotWire").queue_free()
 
-func _fixed_process(delta):
+func _physics_process(delta):
 	if current_state == IN_ROOM:
-
 		var left = Input.is_action_pressed("ui_left")
 		var right = Input.is_action_pressed("ui_right")
 		var down = Input.is_action_pressed("ui_down")
@@ -83,33 +82,33 @@ func _fixed_process(delta):
 			direction.y = 0
 
 		if left && up:
-			set_rotd(45)
+			rotation_degrees = 315
 		elif left && down:
-			set_rotd(135)
+			rotation_degrees = 225
 		elif left:
-			set_rotd(90)
+			rotation_degrees = 270
 		elif right && up:
-			set_rotd(315)
+			rotation_degrees = 45
 		elif right && down:
-			set_rotd(225)
+			rotation_degrees = 135
 		elif right:
-			set_rotd(270)
+			rotation_degrees = 90
 		elif up:
-			set_rotd(0)
+			rotation_degrees = 0
 		elif down:
-			set_rotd(180)
+			rotation_degrees = 180
 
 		if up:
-			move(Vector2(0, -velocity))
+			move_and_collide(Vector2(0, -velocity))
 			direction.y = -1
 		if down:
-			move(Vector2(0, velocity))
+			move_and_collide(Vector2(0, velocity))
 			direction.y = 1
 		if left:
-			move(Vector2(-velocity, 0))
+			move_and_collide(Vector2(-velocity, 0))
 			direction.x = -1
 		if right:
-			move(Vector2(velocity, 0))
+			move_and_collide(Vector2(velocity, 0))
 			direction.x = 1
 		if hacktool_connected && Input.is_action_pressed("hack") && current_state == IN_ROOM:
 			current_state = HACKING
@@ -117,12 +116,13 @@ func _fixed_process(delta):
 			if current_hack_type == DOOR:
 				var door_hack = door_hack_scene.instance()
 				door_hack.connect("done_hacking", self, "_on_done_door_hacking")
-				door_hack.set_pos(get_pos())
+				door_hack.position = Vector2(position.x, position.y)
+				door_hack.position.y += 30
 				get_parent().add_child(door_hack)
 			elif current_hack_type == PANEL:
 				var hot_wire = hot_wire_scene.instance()
 				var camera_canvas = get_node("/root/Container/Camera2D/CanvasLayer")
-				hot_wire.set_pos(Vector2(320, 380))
+				hot_wire.position = Vector2(320, 380)
 				hot_wire.set_name("HotWire")
 				hot_wire.connect("finished", self, "_on_hotwire_finished")
 				camera_canvas.add_child(hot_wire)
@@ -133,21 +133,21 @@ func _fixed_process(delta):
 				var bullet = bullet_scene.instance()
 				bullet.set_name("PlayerBullet")
 				var current_room = _get_current_room()
-				var current_room_pos = current_room.get_pos()
-				var player_pos = get_pos()
+				var current_room_pos = current_room.rect_position
+				var player_pos = Vector2(position.x, position.y)
 				player_pos.x -= current_room_pos.x
 				player_pos.y -= current_room_pos.y
-				bullet.set_pos(player_pos)
+				bullet.position = player_pos
 				current_room.add_child(bullet)
 				bullet.call("play_sound", "player")
-				var pos = get_pos()
 				bullet.call("set_velocity", 450, 450)
-				bullet.call("set_target", Vector2(pos.x + direction.x, pos.y + direction.y))
+				bullet.call("set_target", Vector2(player_pos.x + direction.x, player_pos.y + direction.y))
 
 	elif current_state == ENTERING_ROOM:
 		enter_room_timeout += delta
 		var camera = get_node("/root/Container/Camera2D")
-		camera.set_pos(camera_start_pos.linear_interpolate(move_camera_to, enter_room_timeout / 0.5))
+		camera.position = camera_start_pos.linear_interpolate(move_camera_to, enter_room_timeout / 0.5)
+		camera.align()
 		if enter_room_timeout >= 0.5:
 			enter_room_timeout = 0
 			current_state = IN_ROOM
@@ -174,7 +174,7 @@ func _on_done_door_hacking():
 	current_state = IN_ROOM
 
 func _move_camera_to_room(room):
-	var room_pos = room.get_pos()
+	var room_pos = room.get_rect().position
 	move_camera_to.x = room_pos.x + 320
 	move_camera_to.y = room_pos.y + 240
 
@@ -182,7 +182,7 @@ func _move_to_next_room(door):
 	var room = door.get_node(door.exit_room)
 	_move_camera_to_room(room)
 	current_room = room.room_id
-	set_pos(door.exit_pos)
+	position = door.exit_pos
 	room.call("on_player_enter")
 
 func _on_body_enter(body):
@@ -211,7 +211,7 @@ func _on_area_enter(body):
 				_add_hacking_ui()
 		elif name.find("EnemyBullet") != -1:
 			health -= 1
-			get_node("SamplePlayer2D").play("Hit_Hurt")
+			get_node("/root/Container/HitHurtSound").play()
 			flicker_timeout = 0.5
 			for node in get_tree().get_nodes_in_group("health_bars"):
 				node.queue_free()
@@ -224,9 +224,9 @@ func _on_area_enter(body):
 
 	if goto_next_room:
 		current_state = ENTERING_ROOM
-		camera_start_pos.x = camera.get_pos().x
-		camera_start_pos.y = camera.get_pos().y
-		get_node("SamplePlayer2D").play("Door")
+		camera_start_pos.x = camera.position.x
+		camera_start_pos.y = camera.position.y
+		get_node("/root/Container/DoorSound").play()
 
 func _cleanup_hacking_ui_state():
 	get_node("/root/Container/Camera2D/CanvasLayer/hack_label").queue_free()
@@ -243,7 +243,7 @@ func give_keycard(name):
 	var camera_canvas = get_node("/root/Container/Camera2D/CanvasLayer")
 	var card = key_card_ui_scene.instance()
 	card.set_animation(name)
-	card.set_pos(Vector2(40, 30))
+	card.position = Vector2(40, 30)
 	card.set_name(name + "_key_card_ui")
 	camera_canvas.add_child(card)
 	key_cards.append(name)
@@ -251,7 +251,7 @@ func give_keycard(name):
 func give_hacktool():
 	has_hacktool = true
 	var hack_tool = hack_tool_ui_scene.instance()
-	hack_tool.set_pos(Vector2(40, 30))
+	hack_tool.position = Vector2(40, 30)
 	var camera_canvas = get_node("/root/Container/Camera2D/CanvasLayer")
 	camera_canvas.add_child(hack_tool)
 
@@ -269,11 +269,13 @@ func use_keycard(name):
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
-	get_node("Area2D").connect("area_enter", self, "_on_area_enter")
-	get_node("Area2D").connect("area_exit", self, "_on_area_exit")
-	set_fixed_process(true)
+	get_node("Area2D").connect("area_entered", self, "_on_area_enter")
+	get_node("Area2D").connect("area_exited", self, "_on_area_exit")
+	set_physics_process(true)
 	set_modulate(color_mod)
-	get_node("Area2D").connect("body_enter", self, "_on_body_enter")
-	get_node("Area2D").connect("body_exit", self, "_on_body_exit")
+	get_node("Area2D").connect("body_entered", self, "_on_body_enter")
+	get_node("Area2D").connect("body_exited", self, "_on_body_exit")
+
+	get_node("/root/Container/Camera2D").make_current()
 
 	pass

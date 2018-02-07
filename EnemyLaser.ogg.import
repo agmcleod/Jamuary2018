@@ -1,0 +1,18 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/EnemyLaser.ogg-0742b5d3d597d7872005b77a1b79e767.oggstr"
+
+[deps]
+
+source_file="res://EnemyLaser.ogg"
+source_md5="6fdfbb352e83396b4a322b3589bc80c4"
+
+dest_files=[ "res://.import/EnemyLaser.ogg-0742b5d3d597d7872005b77a1b79e767.oggstr" ]
+dest_md5="caf30cc0de798848a75750c0e5b57fe1"
+
+[params]
+
+loop=false
+loop_offset=0

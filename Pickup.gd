@@ -3,7 +3,7 @@ extends AnimatedSprite
 var pickup_timeout = 0.4
 var allow_pickup = false
 
-func _fixed_process(delta):
+func _process(delta):
 	if pickup_timeout >= 0:
 		if !allow_pickup:
 			pickup_timeout -= delta
@@ -13,9 +13,8 @@ func _fixed_process(delta):
 func _on_area_enter(value):
 	var parent = value.get_parent()
 	if parent && parent.get_name() == "PlayerBody":
-		get_node("/root/Container/SamplePlayer2D").play("Pickup")
+		get_node("/root/Container/PickupSound").play()
 		on_pickup()
 
 func _ready():
-	set_fixed_process(true)
-	get_node("Area2D").connect("area_enter", self, "_on_area_enter")
+	get_node("Area2D").connect("area_entered", self, "_on_area_enter")

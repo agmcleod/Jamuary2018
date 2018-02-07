@@ -2,9 +2,9 @@ extends Node2D
 
 func draw_circle_arc_poly(center, radius, angle_from, angle_to, color):
 	var nb_points = 32
-	var points_arc = Vector2Array()
+	var points_arc = PoolVector2Array()
 	points_arc.push_back(center)
-	var colors = ColorArray([color])
+	var colors = PoolColorArray([color])
 
 	for i in range(nb_points+1):
 			var angle_point = angle_from + i*(angle_to-angle_from)/nb_points - 90

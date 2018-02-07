@@ -25,17 +25,20 @@ func remove_shield():
 	get_node("shield").queue_free()
 	remove_from_group("shielded_enemies")
 
-func _fixed_process(delta):
+func _physics_process(delta):
 	if current_state == ATTACKING:
 		if shoot_timer >= SHOOT_RATE:
 			var bullet = bullet_scene.instance()
 			bullet.set_name("EnemyBullet")
-			bullet.set_pos(get_pos())
+			bullet.position = Vector2(position.x, position.y)
 			get_parent().add_child(bullet)
 			bullet.call("play_sound", "enemy")
 			var player = get_node("/root/Container/PlayerBody")
-			var angle = bullet.call("set_target", player.get_pos())
-			get_node("Turret").set_rot(-angle + deg2rad(45))
+			var target_pos = Vector2(player.position.x, player.position.y)
+			target_pos.x -= get_parent().get_rect().position.x
+			target_pos.y -= get_parent().get_rect().position.y
+			var angle = bullet.call("set_target", target_pos)
+			get_node("Turret").rotation = angle - deg2rad(45)
 			shoot_timer = 0
 		else:
 			shoot_timer += delta
@@ -45,18 +48,18 @@ func _on_area_enter(value):
 	if hit_by_entity:
 		if hit_by_entity.get_name().find("PlayerBullet") != -1:
 			if !shielded:
-				get_node("/root/Container/SamplePlayer2D").play("Hit_Hurt")
+				get_node("/root/Container/HitHurtSound").play()
 				queue_free()
 				get_parent().call("on_enemy_removed")
 			else:
-				get_node("/root/Container/SamplePlayer2D").play("Hit_Shield")
+				$HitShieldSound.play()
 
 
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
-	set_fixed_process(true)
-	get_node("Area2D").connect("area_enter", self, "_on_area_enter")
+	set_physics_process(true)
+	get_node("Area2D").connect("area_entered", self, "_on_area_enter")
 	if shielded:
 		var shield = shield_scene.instance()
 		shield.set_name("shield")

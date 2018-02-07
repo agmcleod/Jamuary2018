@@ -24,8 +24,8 @@ func _check_if_unlocked():
 		parent.call("on_goal_completed")
 
 func _set_velocity_for_bullet(bullet):
-	var bullet_pos = bullet.get_pos()
-	var orb_pos = get_pos()
+	var bullet_pos = bullet.position
+	var orb_pos = position
 	var x_diff = abs(abs(orb_pos.x) - abs(bullet_pos.x))
 	var y_diff = abs(abs(orb_pos.y) - abs(bullet_pos.y))
 
@@ -45,9 +45,9 @@ func _on_area_enter(body):
 			var animated_sprite = get_node("AnimatedSprite")
 			animated_sprite.set_animation("lit")
 			_check_if_unlocked()
-			get_node("SamplePlayer2D").play("OrbHit")
+			get_node("SamplePlayer2D").play()
 
-func _fixed_process(delta):
+func _physics_process(delta):
 	if hit && !permanently_hit:
 		hit_timeout -= delta
 		if hit_timeout <= 0:
@@ -64,6 +64,6 @@ func is_hit():
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
-	set_fixed_process(true)
-	get_node("Area2D").connect("area_enter", self, "_on_area_enter")
+	set_physics_process(true)
+	get_node("Area2D").connect("area_entered", self, "_on_area_enter")
 	pass

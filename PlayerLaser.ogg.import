@@ -1,0 +1,18 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/PlayerLaser.ogg-8b192104f7197310c113bd424ee1c5d8.oggstr"
+
+[deps]
+
+source_file="res://PlayerLaser.ogg"
+source_md5="74056c3c957ccb16bf2395d83c4d0573"
+
+dest_files=[ "res://.import/PlayerLaser.ogg-8b192104f7197310c113bd424ee1c5d8.oggstr" ]
+dest_md5="102aff539169b4f9e71458f064fe4979"
+
+[params]
+
+loop=false
+loop_offset=0

@@ -1,65 +1,56 @@
-[gd_scene load_steps=7 format=1]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://bullet.png" type="Texture" id=1]
 [ext_resource path="res://Bullet.gd" type="Script" id=2]
-[ext_resource path="res://EnemyLaser.wav" type="Sample" id=3]
-[ext_resource path="res://PlayerLaser.wav" type="Sample" id=4]
+[ext_resource path="res://PlayerLaser.ogg" type="AudioStream" id=3]
+[ext_resource path="res://EnemyLaser.ogg" type="AudioStream" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
 extents = Vector2( 10, 10 )
 
-[sub_resource type="SampleLibrary" id=3]
-
-samples/EnemyLaser = {
-"db": 0.0,
-"pitch": 1.0,
-"priority": 0,
-"sample": ExtResource( 3 )
-}
-samples/PlayerLaser = {
-"db": 0.0,
-"pitch": 1.0,
-"priority": 0,
-"sample": ExtResource( 4 )
-}
-
 [node name="BulletBody" type="Sprite"]
 
 texture = ExtResource( 1 )
-script/script = ExtResource( 2 )
+script = ExtResource( 2 )
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." index="0"]
 
-transform/pos = Vector2( 0.0556389, -0.0840474 )
-transform/scale = Vector2( 0.155732, 0.152983 )
-input/pickable = true
-shapes/0/shape = SubResource( 1 )
-shapes/0/transform = Matrix32( 3.21448, 0, 0, 3.25749, -0.37648, 0.383217 )
-shapes/0/trigger = false
+position = Vector2( 0.0556389, -0.0840474 )
+scale = Vector2( 0.155732, 0.152983 )
+input_pickable = true
 gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
 linear_damp = 0.1
 angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" index="0"]
 
-transform/pos = Vector2( -0.37648, 0.383217 )
-transform/scale = Vector2( 3.21448, 3.25749 )
+position = Vector2( -0.37648, 0.383217 )
+scale = Vector2( 3.21448, 3.25749 )
 shape = SubResource( 1 )
-trigger = false
-_update_shape_index = 0
 
-[node name="SamplePlayer2D" type="SamplePlayer2D" parent="."]
+[node name="PlayerSound" type="AudioStreamPlayer2D" parent="." index="1"]
 
-params/volume_db = 0.0
-params/pitch_scale = 1.0
-params/attenuation/min_distance = 1.0
-params/attenuation/max_distance = 2048.0
-params/attenuation/distance_exp = 1.0
-config/polyphony = 1
-config/samples = SubResource( 3 )
-config/pitch_random = 0.0
+stream = ExtResource( 3 )
+volume_db = 0.0
+autoplay = false
+max_distance = 2000.0
+attenuation = 1.0
+bus = "Master"
+area_mask = 1
+
+[node name="EnemySound" type="AudioStreamPlayer2D" parent="." index="2"]
+
+stream = ExtResource( 4 )
+volume_db = 0.0
+autoplay = false
+max_distance = 2000.0
+attenuation = 1.0
+bus = "Master"
+area_mask = 1
 
 

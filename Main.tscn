@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=1]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://Game.gd" type="Script" id=1]
 [ext_resource path="res://Room.tscn" type="PackedScene" id=2]
@@ -17,408 +17,417 @@
 [ext_resource path="res://Panel.tscn" type="PackedScene" id=15]
 [ext_resource path="res://player.gd" type="Script" id=16]
 [ext_resource path="res://player.png" type="Texture" id=17]
-[ext_resource path="res://Door.wav" type="Sample" id=18]
-[ext_resource path="res://Hit_Hurt.wav" type="Sample" id=19]
-[ext_resource path="res://Hit_Shield.wav" type="Sample" id=20]
-[ext_resource path="res://Pickup.wav" type="Sample" id=21]
-[ext_resource path="res://music.ogg" type="AudioStream" id=22]
+[ext_resource path="res://Door.ogg" type="AudioStream" id=18]
+[ext_resource path="res://Hit_Hurt.ogg" type="AudioStream" id=19]
+[ext_resource path="res://music.ogg" type="AudioStream" id=20]
+[ext_resource path="res://Pickup.ogg" type="AudioStream" id=21]
 
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
-extents = Vector2( 10, 10 )
+extents = Vector2( 12.5828, 10 )
 
 [sub_resource type="RectangleShape2D" id=2]
 
 custom_solver_bias = 0.0
-extents = Vector2( 12.5828, 10 )
+extents = Vector2( 10, 10 )
 
-[sub_resource type="SampleLibrary" id=3]
+[node name="Container" type="Node2D" index="0"]
 
-samples/Door = {
-"db": 0.0,
-"pitch": 1.0,
-"priority": 0,
-"sample": ExtResource( 18 )
-}
-samples/Hit_Hurt = {
-"db": 0.0,
-"pitch": 1.0,
-"priority": 0,
-"sample": ExtResource( 19 )
-}
+script = ExtResource( 1 )
 
-[sub_resource type="SampleLibrary" id=4]
+[node name="MainRoom" parent="." index="0" instance=ExtResource( 2 )]
 
-samples/Hit_Hurt = {
-"db": 0.0,
-"pitch": 1.0,
-"priority": 0,
-"sample": ExtResource( 19 )
-}
-samples/Hit_Shield = {
-"db": 0.0,
-"pitch": 1.0,
-"priority": 0,
-"sample": ExtResource( 20 )
-}
-samples/Pickup = {
-"db": 0.0,
-"pitch": 1.0,
-"priority": 0,
-"sample": ExtResource( 21 )
-}
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 0.0
+margin_top = 0.0
+margin_right = 640.0
+margin_bottom = 480.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+_sections_unfolded = [ "Rect" ]
 
-[node name="Container" type="Node2D"]
+[node name="Floor" type="Sprite" parent="MainRoom" index="4"]
 
-script/script = ExtResource( 1 )
-
-[node name="MainRoom" parent="." instance=ExtResource( 2 )]
-
-editor/display_folded = true
-margin/left = 0.0
-margin/top = 0.0
-margin/right = 640.0
-margin/bottom = 480.0
-
-[node name="Floor" type="Sprite" parent="MainRoom"]
-
-transform/pos = Vector2( 320.785, 240.393 )
-z/z = -1
+position = Vector2( 320.785, 240.393 )
 texture = ExtResource( 3 )
 
-[node name="RightDoor" parent="MainRoom" instance=ExtResource( 4 )]
+[node name="RightDoor" parent="MainRoom" index="5" instance=ExtResource( 4 )]
 
-transform/pos = Vector2( 617.438, 240 )
-transform/rot = 180.0
+position = Vector2( 617.438, 240 )
+rotation = 3.14159
+_sections_unfolded = [ "Transform" ]
 exit_pos = Vector2( 720, 240 )
 exit_room = NodePath("../../EnemyKeyRoom")
 
-[node name="BottomDoor" parent="MainRoom" instance=ExtResource( 4 )]
+[node name="BottomDoor" parent="MainRoom" index="6" instance=ExtResource( 4 )]
 
-transform/pos = Vector2( 320.551, 455 )
-transform/rot = 90.0
+position = Vector2( 320.551, 455 )
+rotation = -1.5708
+_sections_unfolded = [ "Transform" ]
 locked = true
 exit_pos = Vector2( 320, 560 )
 required_key_card = "blue"
 exit_room = NodePath("../../BottomRoom")
 
-[node name="TopDoor" parent="MainRoom" instance=ExtResource( 4 )]
+[node name="TopDoor" parent="MainRoom" index="7" instance=ExtResource( 4 )]
 
-transform/pos = Vector2( 320, 25 )
-transform/rot = -90.0
+position = Vector2( 320, 25 )
+rotation = 1.5708
+_sections_unfolded = [ "Transform" ]
 locked = true
 exit_pos = Vector2( 320, -80 )
 required_key_card = "yellow"
 exit_room = NodePath("../../TopRoom")
 
-[node name="LeftDoor" parent="MainRoom" instance=ExtResource( 4 )]
+[node name="LeftDoor" parent="MainRoom" index="8" instance=ExtResource( 4 )]
 
-transform/pos = Vector2( 24.0211, 240 )
+position = Vector2( 24.0211, 240 )
 locked = true
 hackable = true
 exit_pos = Vector2( -105, 240 )
 exit_room = NodePath("../../HackRoom")
 
-[node name="HackDoorLabel" type="Sprite" parent="MainRoom"]
+[node name="HackDoorLabel" type="Sprite" parent="MainRoom" index="9"]
 
-transform/pos = Vector2( 75, 240 )
+position = Vector2( 75, 240 )
 texture = ExtResource( 5 )
 
-[node name="BlueDoorLabel" type="Sprite" parent="MainRoom"]
+[node name="BlueDoorLabel" type="Sprite" parent="MainRoom" index="10"]
 
-transform/pos = Vector2( 320, 405 )
+position = Vector2( 320, 405 )
 texture = ExtResource( 6 )
 
-[node name="YellowDoorLabel" type="Sprite" parent="MainRoom"]
+[node name="YellowDoorLabel" type="Sprite" parent="MainRoom" index="11"]
 
-transform/pos = Vector2( 320, 75 )
-transform/rot = 180.0
+position = Vector2( 320, 75 )
 texture = ExtResource( 7 )
 
-[node name="EnemyKeyRoom" parent="." instance=ExtResource( 2 )]
+[node name="EnemyKeyRoom" parent="." index="1" instance=ExtResource( 2 )]
 
-margin/left = 640.0
-margin/top = 0.0
-script/script = ExtResource( 8 )
+editor/display_folded = true
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 640.0
+margin_top = 0.0
+margin_right = 1280.0
+margin_bottom = 480.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+script = ExtResource( 8 )
+_sections_unfolded = [ "Rect" ]
+room_id = 1
 
-[node name="Floor" type="Sprite" parent="EnemyKeyRoom"]
+[node name="Floor" type="Sprite" parent="EnemyKeyRoom" index="4"]
 
-transform/pos = Vector2( 320, 240 )
-z/z = -1
+position = Vector2( 320, 240 )
 texture = ExtResource( 3 )
 
-[node name="LeftDoor" parent="EnemyKeyRoom" instance=ExtResource( 4 )]
+[node name="LeftDoor" parent="EnemyKeyRoom" index="5" instance=ExtResource( 4 )]
 
-transform/pos = Vector2( 25, 240 )
+position = Vector2( 25, 240 )
 exit_pos = Vector2( 560, 240 )
 exit_room = NodePath("../../MainRoom")
 
-[node name="EnemyBody" parent="EnemyKeyRoom" instance=ExtResource( 9 )]
+[node name="EnemyBody" parent="EnemyKeyRoom" index="6" instance=ExtResource( 9 )]
 
-transform/pos = Vector2( 150, 110 )
+position = Vector2( 150, 110 )
 enemy_room = 1
 
-[node name="EnemyBody1" parent="EnemyKeyRoom" instance=ExtResource( 9 )]
+[node name="EnemyBody1" parent="EnemyKeyRoom" index="7" instance=ExtResource( 9 )]
 
-transform/pos = Vector2( 460, 110.008 )
+position = Vector2( 460, 110.008 )
 enemy_room = 1
 
-[node name="EnemyBody2" parent="EnemyKeyRoom" instance=ExtResource( 9 )]
+[node name="EnemyBody2" parent="EnemyKeyRoom" index="8" instance=ExtResource( 9 )]
 
-transform/pos = Vector2( 460, 380 )
+position = Vector2( 460, 380 )
 enemy_room = 1
 
-[node name="EnemyBody3" parent="EnemyKeyRoom" instance=ExtResource( 9 )]
+[node name="EnemyBody3" parent="EnemyKeyRoom" index="9" instance=ExtResource( 9 )]
 
-transform/pos = Vector2( 150, 380 )
+position = Vector2( 150, 380 )
 enemy_room = 1
 
-[node name="BottomRoom" parent="." instance=ExtResource( 2 )]
+[node name="BottomRoom" parent="." index="2" instance=ExtResource( 2 )]
 
-editor/display_folded = true
-margin/left = 0.0
-margin/top = 480.0
-margin/right = 640.0
-margin/bottom = 960.0
-script/script = ExtResource( 10 )
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 0.0
+margin_top = 480.0
+margin_right = 640.0
+margin_bottom = 960.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+script = ExtResource( 10 )
 room_id = 2
 
-[node name="Floor" type="Sprite" parent="BottomRoom"]
+[node name="Floor" type="Sprite" parent="BottomRoom" index="4"]
 
-transform/pos = Vector2( 320, 240 )
-z/z = -1
+position = Vector2( 320, 240 )
 texture = ExtResource( 3 )
 
-[node name="TopDoor" parent="BottomRoom" instance=ExtResource( 4 )]
+[node name="TopDoor" parent="BottomRoom" index="5" instance=ExtResource( 4 )]
 
-transform/pos = Vector2( 320, 25 )
-transform/rot = -90.0
+position = Vector2( 320, 25 )
+rotation = 1.5708
+_sections_unfolded = [ "Transform" ]
 exit_pos = Vector2( 320, 400 )
 exit_room = NodePath("../../MainRoom")
 
-[node name="Orb1" parent="BottomRoom" instance=ExtResource( 11 )]
+[node name="Orb1" parent="BottomRoom" index="6" instance=ExtResource( 11 )]
 
-transform/pos = Vector2( 259, 130 )
+position = Vector2( 259, 130 )
 
-[node name="Orb2" parent="BottomRoom" instance=ExtResource( 11 )]
+[node name="Orb2" parent="BottomRoom" index="7" instance=ExtResource( 11 )]
 
-transform/pos = Vector2( 366, 234 )
+position = Vector2( 366, 234 )
 
-[node name="Orb3" parent="BottomRoom" instance=ExtResource( 11 )]
+[node name="Orb3" parent="BottomRoom" index="8" instance=ExtResource( 11 )]
 
-transform/pos = Vector2( 259, 346 )
+position = Vector2( 259, 346 )
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." index="3"]
 
-editor/display_folded = true
-visibility/visible = false
-transform/pos = Vector2( 320, 240 )
-transform/scale = Vector2( 9.96891, 7.47652 )
-z/z = 100
+position = Vector2( 320, 240 )
 anchor_mode = 1
 rotating = false
-current = true
+current = false
 zoom = Vector2( 1, 1 )
-limit/left = -10000000
-limit/top = -10000000
-limit/right = 10000000
-limit/bottom = 10000000
-drag_margin/h_enabled = false
-drag_margin/v_enabled = false
-smoothing/enable = false
-smoothing/speed = 5.0
-drag_margin/left = 0.2
-drag_margin/top = 0.2
-drag_margin/right = 0.2
-drag_margin/bottom = 0.2
+limit_left = -10000000
+limit_top = -10000000
+limit_right = 10000000
+limit_bottom = 10000000
+limit_smoothed = false
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
+smoothing_enabled = false
+smoothing_speed = 5.0
+offset_v = 0.0
+offset_h = 0.0
+drag_margin_left = 0.2
+drag_margin_top = 0.2
+drag_margin_right = 0.2
+drag_margin_bottom = 0.2
+editor_draw_screen = true
+editor_draw_limits = false
+editor_draw_drag_margin = false
+_sections_unfolded = [ "Transform", "Z Index" ]
 
-[node name="CanvasLayer" type="CanvasLayer" parent="Camera2D"]
+[node name="CanvasLayer" type="CanvasLayer" parent="Camera2D" index="0"]
 
+editor/display_folded = true
 layer = 1
 offset = Vector2( 0, 0 )
 rotation = 0.0
 scale = Vector2( 1, 1 )
+transform = Transform2D( 1, 0, 0, 1, 0, 0 )
 
-[node name="Health" parent="Camera2D/CanvasLayer" instance=ExtResource( 12 )]
+[node name="Health" parent="Camera2D/CanvasLayer" index="0" instance=ExtResource( 12 )]
 
-transform/pos = Vector2( 500, 25 )
+position = Vector2( 500, 25 )
 
-[node name="Health1" parent="Camera2D/CanvasLayer" instance=ExtResource( 12 )]
+[node name="Health1" parent="Camera2D/CanvasLayer" index="1" instance=ExtResource( 12 )]
 
-transform/pos = Vector2( 520, 25 )
+position = Vector2( 520, 25 )
 
-[node name="Health2" parent="Camera2D/CanvasLayer" instance=ExtResource( 12 )]
+[node name="Health2" parent="Camera2D/CanvasLayer" index="2" instance=ExtResource( 12 )]
 
-transform/pos = Vector2( 540, 25 )
+position = Vector2( 540, 25 )
 
-[node name="TopRoom" parent="." instance=ExtResource( 2 )]
+[node name="TopRoom" parent="." index="4" instance=ExtResource( 2 )]
 
 editor/display_folded = true
-margin/left = 0.0
-margin/top = -480.0
-margin/right = 640.0
-margin/bottom = 0.0
-script/script = ExtResource( 13 )
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 0.0
+margin_top = -480.0
+margin_right = 640.0
+margin_bottom = 0.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+script = ExtResource( 13 )
+room_id = 3
 
-[node name="Floor" type="Sprite" parent="TopRoom"]
+[node name="Floor" type="Sprite" parent="TopRoom" index="4"]
 
-transform/pos = Vector2( 320, 240 )
-z/z = -1
+position = Vector2( 320, 240 )
 texture = ExtResource( 3 )
 
-[node name="BottomDoor" parent="TopRoom" instance=ExtResource( 4 )]
+[node name="BottomDoor" parent="TopRoom" index="5" instance=ExtResource( 4 )]
 
-transform/pos = Vector2( 320, 455 )
-transform/rot = 90.0
+position = Vector2( 320, 455 )
+rotation = 4.71239
+_sections_unfolded = [ "Transform" ]
 exit_pos = Vector2( 320, 90 )
 exit_room = NodePath("../../MainRoom")
 
-[node name="EnemyBody" parent="TopRoom" instance=ExtResource( 9 )]
+[node name="EnemyBody" parent="TopRoom" index="6" instance=ExtResource( 9 )]
 
-transform/pos = Vector2( 85, 140 )
+position = Vector2( 85, 140 )
 
-[node name="EnemyBody1" parent="TopRoom" instance=ExtResource( 9 )]
+[node name="EnemyBody1" parent="TopRoom" index="7" instance=ExtResource( 9 )]
 
-transform/pos = Vector2( 160, 140 )
+position = Vector2( 160, 140 )
 
-[node name="EnemyBody2" parent="TopRoom" instance=ExtResource( 9 )]
+[node name="EnemyBody2" parent="TopRoom" index="8" instance=ExtResource( 9 )]
 
-transform/pos = Vector2( 235, 140 )
+position = Vector2( 235, 140 )
 
-[node name="EnemyBody3" parent="TopRoom" instance=ExtResource( 9 )]
+[node name="EnemyBody3" parent="TopRoom" index="9" instance=ExtResource( 9 )]
 
-transform/pos = Vector2( 310, 140 )
+position = Vector2( 310, 140 )
 
-[node name="EnemyBody4" parent="TopRoom" instance=ExtResource( 9 )]
+[node name="EnemyBody4" parent="TopRoom" index="10" instance=ExtResource( 9 )]
 
-transform/pos = Vector2( 385, 140 )
+position = Vector2( 385, 140 )
 
-[node name="EnemyBody5" parent="TopRoom" instance=ExtResource( 9 )]
+[node name="EnemyBody5" parent="TopRoom" index="11" instance=ExtResource( 9 )]
 
-transform/pos = Vector2( 460, 140 )
+position = Vector2( 460, 140 )
 
-[node name="EnemyBody6" parent="TopRoom" instance=ExtResource( 9 )]
+[node name="EnemyBody6" parent="TopRoom" index="12" instance=ExtResource( 9 )]
 
-transform/pos = Vector2( 535, 140 )
+position = Vector2( 535, 140 )
 
-[node name="HackRoom" parent="." instance=ExtResource( 2 )]
+[node name="HackRoom" parent="." index="5" instance=ExtResource( 2 )]
 
 editor/display_folded = true
-margin/left = -640.0
-margin/top = 0.0
-margin/right = 0.0
-margin/bottom = 480.0
-script/script = ExtResource( 14 )
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = -640.0
+margin_top = 0.0
+margin_right = 0.0
+margin_bottom = 480.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+script = ExtResource( 14 )
+room_id = 4
 
-[node name="Floor" type="Sprite" parent="HackRoom"]
+[node name="Floor" type="Sprite" parent="HackRoom" index="4"]
 
-transform/pos = Vector2( 320, 240 )
-z/z = -1
+position = Vector2( 320, 240 )
 texture = ExtResource( 3 )
 
-[node name="RightDoor" parent="HackRoom" instance=ExtResource( 4 )]
+[node name="RightDoor" parent="HackRoom" index="5" instance=ExtResource( 4 )]
 
-transform/pos = Vector2( 615, 240 )
-transform/rot = 180.0
+position = Vector2( 615, 240 )
+rotation = 3.14159
+_sections_unfolded = [ "Transform" ]
 exit_pos = Vector2( 80, 240 )
 exit_room = NodePath("../../MainRoom")
 
-[node name="EnemyBody" parent="HackRoom" instance=ExtResource( 9 )]
+[node name="EnemyBody" parent="HackRoom" index="6" instance=ExtResource( 9 )]
 
-transform/pos = Vector2( 151, 128 )
+position = Vector2( 151, 128 )
 shielded = true
 
-[node name="EnemyBody1" parent="HackRoom" instance=ExtResource( 9 )]
+[node name="EnemyBody1" parent="HackRoom" index="7" instance=ExtResource( 9 )]
 
-transform/pos = Vector2( 490, 128 )
+position = Vector2( 490, 128 )
 shielded = true
 
-[node name="Panel" parent="HackRoom" instance=ExtResource( 15 )]
+[node name="Panel" parent="HackRoom" index="8" instance=ExtResource( 15 )]
 
-transform/pos = Vector2( 320, 355 )
+position = Vector2( 320, 355 )
 
-[node name="PlayerBody" type="KinematicBody2D" parent="."]
+[node name="PlayerBody" type="KinematicBody2D" parent="." index="6"]
 
 editor/display_folded = true
-transform/pos = Vector2( 320, 240 )
-input/pickable = false
-shapes/0/shape = SubResource( 1 )
-shapes/0/transform = Matrix32( 2.02829, 0, 0, 2.25636, -0.190427, -2.40106 )
-shapes/0/trigger = false
-collision/layers = 1
-collision/mask = 1
-collision/margin = 0.08
-script/script = ExtResource( 16 )
+position = Vector2( 320, 240 )
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+collision/safe_margin = 0.08
+script = ExtResource( 16 )
 CENTER_ROOM = 0
 KEY_ROOM = 1
 ORB_ROOM = 2
 TOP_ROOM = 3
 
-[node name="Sprite" type="Sprite" parent="PlayerBody"]
+[node name="Sprite" type="Sprite" parent="PlayerBody" index="0"]
 
 texture = ExtResource( 17 )
 
-[node name="Area2D" type="Area2D" parent="PlayerBody"]
+[node name="Area2D" type="Area2D" parent="PlayerBody" index="1"]
 
-transform/pos = Vector2( -0.494381, -3.06664 )
-transform/scale = Vector2( 0.690617, 0.799965 )
-input/pickable = true
-shapes/0/shape = SubResource( 2 )
-shapes/0/transform = Matrix32( 2.51798, 0, 0, 3.07958, 0, -2.14577e-05 )
-shapes/0/trigger = false
+position = Vector2( -0.494381, -3.06664 )
+scale = Vector2( 0.690617, 0.799965 )
+input_pickable = true
 gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
 linear_damp = 0.1
 angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerBody/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerBody/Area2D" index="0"]
 
-transform/pos = Vector2( 0, -2.14577e-05 )
-transform/scale = Vector2( 2.51798, 3.07958 )
-shape = SubResource( 2 )
-trigger = false
-_update_shape_index = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerBody"]
-
-transform/pos = Vector2( -0.190427, -2.40106 )
-transform/scale = Vector2( 2.02829, 2.25636 )
+position = Vector2( 0, -2.14577e-05 )
+scale = Vector2( 2.51798, 3.07958 )
 shape = SubResource( 1 )
-trigger = false
-_update_shape_index = 0
 
-[node name="SamplePlayer2D" type="SamplePlayer2D" parent="PlayerBody"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerBody" index="2"]
 
-params/volume_db = 0.0
-params/pitch_scale = 1.0
-params/attenuation/min_distance = 1.0
-params/attenuation/max_distance = 2048.0
-params/attenuation/distance_exp = 1.0
-config/polyphony = 1
-config/samples = SubResource( 3 )
-config/pitch_random = 0.0
+position = Vector2( -0.190427, -2.40106 )
+scale = Vector2( 2.02829, 2.25636 )
+shape = SubResource( 2 )
 
-[node name="SamplePlayer2D" type="SamplePlayer2D" parent="."]
+[node name="DoorSound" type="AudioStreamPlayer2D" parent="." index="7"]
 
-params/volume_db = 0.0
-params/pitch_scale = 1.0
-params/attenuation/min_distance = 1.0
-params/attenuation/max_distance = 2048.0
-params/attenuation/distance_exp = 1.0
-config/polyphony = 1
-config/samples = SubResource( 4 )
-config/pitch_random = 0.0
+position = Vector2( 320, 240 )
+stream = ExtResource( 18 )
+volume_db = 0.0
+autoplay = false
+max_distance = 2000.0
+attenuation = 1.0
+bus = "Master"
+area_mask = 1
+_sections_unfolded = [ "Pause" ]
 
-[node name="StreamPlayer" type="StreamPlayer" parent="."]
+[node name="HitHurtSound" type="AudioStreamPlayer2D" parent="." index="8"]
 
-stream/stream = ExtResource( 22 )
-stream/play = false
-stream/loop = false
-stream/volume_db = 0.0
-stream/autoplay = true
-stream/paused = false
-stream/loop_restart_time = 0.0
-stream/buffering_ms = 500
+position = Vector2( 320, 240 )
+stream = ExtResource( 19 )
+volume_db = 0.0
+autoplay = false
+max_distance = 2000.0
+attenuation = 1.0
+bus = "Master"
+area_mask = 1
+
+[node name="StreamPlayer" type="AudioStreamPlayer" parent="." index="9"]
+
+stream = ExtResource( 20 )
+volume_db = 0.0
+autoplay = true
+mix_target = 0
+bus = "Master"
+
+[node name="PickupSound" type="AudioStreamPlayer2D" parent="." index="10"]
+
+stream = ExtResource( 21 )
+volume_db = 0.0
+autoplay = false
+max_distance = 2000.0
+attenuation = 1.0
+bus = "Master"
+area_mask = 1
 
 

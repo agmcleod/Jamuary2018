@@ -8,29 +8,24 @@ var velocity = Vector2(150, 150)
 # Used for orb hits. Delete after 3
 var hit_count = 0
 
-func _fixed_process(delta):
-	var pos = get_pos()
-	pos.x += velocity.x * delta
-	pos.y += velocity.y * delta
-	set_pos(pos)
+func _process(delta):
+	position.x += velocity.x * delta
+	position.y += velocity.y * delta
 
 func play_sound(name):
 	if name == "enemy":
-		get_node("SamplePlayer2D").play("EnemyLaser")
+		$PlayerSound.play()
 	elif name == "player":
-		get_node("SamplePlayer2D").play("PlayerLaser")
+		$EnemySound.play()
 
 func set_target(target_pos):
-	var current_pos = get_pos()
-	current_pos.x += get_parent().get_pos().x
-	current_pos.y += get_parent().get_pos().y
-
+	var current_pos = position
 	var angle = atan2(target_pos.y - current_pos.y, target_pos.x - current_pos.x)
 	angle = deg2rad(round(rad2deg(angle) / 45) * 45)
 	velocity.x *= cos(angle)
 	velocity.y *= sin(angle)
 
-	get_node("Area2D").connect("area_enter", self, "_on_area_enter")
+	get_node("Area2D").connect("area_entered", self, "_on_area_enter")
 	return angle
 
 func get_velocity():
@@ -57,6 +52,3 @@ func _on_area_enter(value):
 			|| (hit_name != "PlayerBody" && hit_name.find("PlayerBullet") == -1 && name.find("PlayerBullet") != -1):
 			queue_free()
 
-func _ready():
-	set_fixed_process(true)
-	pass

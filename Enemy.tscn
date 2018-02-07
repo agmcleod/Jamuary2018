@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=1]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Enemy.gd" type="Script" id=1]
 [ext_resource path="res://enemy.png" type="Texture" id=2]
 [ext_resource path="res://enemy-turret.png" type="Texture" id=3]
+[ext_resource path="res://Hit_Shield.ogg" type="AudioStream" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -16,55 +17,57 @@ extents = Vector2( 10, 10 )
 
 [node name="EnemyBody" type="KinematicBody2D"]
 
-input/pickable = false
-shapes/0/shape = SubResource( 1 )
-shapes/0/transform = Matrix32( 2.00369, 0, 0, 2.01326, 0.0725672, 0.0455278 )
-shapes/0/trigger = false
-collision/layers = 1
-collision/mask = 1
-collision/margin = 0.08
-script/script = ExtResource( 1 )
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+collision/safe_margin = 0.08
+script = ExtResource( 1 )
 enemy_room = 0
 shielded = false
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="Sprite" type="Sprite" parent="." index="0"]
 
 texture = ExtResource( 2 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
 
-visibility/visible = false
-transform/pos = Vector2( 0.0725672, 0.0455278 )
-transform/scale = Vector2( 2.00369, 2.01326 )
+visible = false
+position = Vector2( 0.0725672, 0.0455278 )
+scale = Vector2( 2.00369, 2.01326 )
 shape = SubResource( 1 )
-trigger = false
-_update_shape_index = 0
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." index="2"]
 
-transform/pos = Vector2( 0.0309491, 0.252869 )
-transform/scale = Vector2( 0.636422, 0.629941 )
-input/pickable = true
-shapes/0/shape = SubResource( 2 )
-shapes/0/transform = Matrix32( 3.17844, 0, 0, 3.17569, -0.0651754, -0.724281 )
-shapes/0/trigger = false
+position = Vector2( 0.0309491, 0.252869 )
+scale = Vector2( 0.636422, 0.629941 )
+input_pickable = true
 gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
 linear_damp = 0.1
 angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" index="0"]
 
-transform/pos = Vector2( -0.0651754, -0.724281 )
-transform/scale = Vector2( 3.17844, 3.17569 )
+position = Vector2( -0.0651754, -0.724281 )
+scale = Vector2( 3.17844, 3.17569 )
 shape = SubResource( 2 )
-trigger = false
-_update_shape_index = 0
 
-[node name="Turret" type="Sprite" parent="."]
+[node name="Turret" type="Sprite" parent="." index="3"]
 
-transform/pos = Vector2( -0.0829544, -0.165913 )
+position = Vector2( -0.0829544, -0.165913 )
 texture = ExtResource( 3 )
 offset = Vector2( 1, 1 )
+
+[node name="HitShieldSound" type="AudioStreamPlayer2D" parent="." index="4"]
+
+stream = ExtResource( 4 )
+volume_db = 0.0
+autoplay = false
+max_distance = 2000.0
+attenuation = 1.0
+bus = "Master"
+area_mask = 1
 
 

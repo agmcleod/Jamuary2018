@@ -1,0 +1,18 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Hit_Shield.ogg-ae2e210ba2162dbcebb913cb2eff984f.oggstr"
+
+[deps]
+
+source_file="res://Hit_Shield.ogg"
+source_md5="d63545ea03118983be3a4a1fcc1e8bc6"
+
+dest_files=[ "res://.import/Hit_Shield.ogg-ae2e210ba2162dbcebb913cb2eff984f.oggstr" ]
+dest_md5="90297c34dd7f9fb9369ffe71b1e05c53"
+
+[params]
+
+loop=false
+loop_offset=0
